@@ -3,9 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:paymob_payment/paymob_payment.dart';
 
+import '../cubit/auth_cubit.dart';
+import '../services/pref.service.dart';
 import '../widgets/home/categories_widget.dart';
 import '../widgets/course/courses_widget.dart';
 import '../widgets/home/label_widget.dart';
@@ -19,12 +22,31 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  String? welcomeMessage;
+
+  @override
+  void initState() {
+    _setWelcomeMessage(FirebaseAuth.instance.currentUser?.displayName ?? 'User',
+        welcomeMessage ?? '');
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.logout),
+            onPressed: () {
+              context.read<AuthCubit>().logout(context: context);
+            },
+          ),
+        ],
         title: Text(
-            'Welcome Back! ${FirebaseAuth.instance.currentUser?.displayName}'),
+          // 'Welcome Back! ${FirebaseAuth.instance.currentUser?.displayName}'),
+          welcomeMessage ?? '',
+        ),
       ),
       body: SafeArea(
         child: Padding(
@@ -117,5 +139,19 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
     );
+  }
+
+  String _setWelcomeMessage(String username, String? message) {
+    if (mounted) {
+      if (PreferencesService.isFirstTimeLogin) {
+        welcomeMessage = 'Welcome, $username';
+        message = welcomeMessage;
+        PreferencesService.isFirstTimeLogin = false;
+      } else {
+        welcomeMessage = 'Welcome Back, $username';
+        message = welcomeMessage;
+      }
+    }
+    return message!;
   }
 }

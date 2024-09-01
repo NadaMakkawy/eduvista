@@ -22,4 +22,10 @@ abstract class PreferencesService {
 
   static set isOnBoardingSeen(bool value) =>
       prefs!.setBool('isOnBoardingSeen', value);
+
+  static bool get isFirstTimeLogin =>
+      prefs!.getBool('isFirstTimeLogin') ?? true;
+
+  static set isFirstTimeLogin(bool value) =>
+      prefs!.setBool('isFirstTimeLogin', value);
 }

@@ -192,4 +192,26 @@ class AuthCubit extends Cubit<AuthState> {
       );
     }
   }
+
+  Future<void> logout({
+    required BuildContext context,
+  }) async {
+    try {
+      await FirebaseAuth.instance.signOut();
+
+      if (!context.mounted) return;
+      Navigator.pushReplacementNamed(context, LoginPage.id);
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Logged out successfully'),
+        ),
+      );
+      Navigator.pushReplacementNamed(context, LoginPage.id);
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error: ${e.toString()}')),
+      );
+    }
+  }
 }
