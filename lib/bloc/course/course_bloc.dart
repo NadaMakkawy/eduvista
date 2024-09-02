@@ -1,13 +1,12 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../../models/course.dart';
 import '../../models/lecture.dart';
 
 import '../../utils/app_enums.dart';
-
-import '../../getters/lectures/lectures_getter.dart';
 
 part 'course_event.dart';
 part 'course_state.dart';
@@ -25,7 +24,11 @@ class CourseBloc extends Bloc<CourseEvent, CourseState> {
       return null;
     }
     try {
-      var result = await lecturesGetter;
+      var result = await FirebaseFirestore.instance
+          .collection('courses')
+          .doc(course!.id)
+          .collection('lectures')
+          .get();
 
       return result.docs
           .map((e) => Lecture.fromJson({
