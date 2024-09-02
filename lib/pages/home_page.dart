@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -8,7 +9,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:paymob_payment/paymob_payment.dart';
 
 import '../cubit/auth_cubit.dart';
-import '../services/pref.service.dart';
+
 import '../widgets/home/categories_widget.dart';
 import '../widgets/course/courses_widget.dart';
 import '../widgets/home/label_widget.dart';
@@ -22,12 +23,11 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  String? welcomeMessage;
+  String welcomeMessage = 'Loading...';
 
   @override
   void initState() {
-    _setWelcomeMessage(FirebaseAuth.instance.currentUser?.displayName ?? 'User',
-        welcomeMessage ?? '');
+    _checkUserStatus();
     super.initState();
   }
 
@@ -35,6 +35,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         actions: [
           IconButton(
             icon: const Icon(Icons.logout),
@@ -44,14 +45,13 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
         title: Text(
-          // 'Welcome Back! ${FirebaseAuth.instance.currentUser?.displayName}'),
-          welcomeMessage ?? '',
+          welcomeMessage,
         ),
       ),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Column(
+          child: ListView(
             children: [
               LabelWidget(
                 name: 'Categories',
@@ -141,17 +141,25 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  String _setWelcomeMessage(String username, String? message) {
-    if (mounted) {
-      if (PreferencesService.isFirstTimeLogin) {
-        welcomeMessage = 'Welcome, $username';
-        message = welcomeMessage;
-        PreferencesService.isFirstTimeLogin = false;
+  Future<void> _checkUserStatus() async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null) return;
+
+    final firestore = FirebaseFirestore.instance;
+    final userDoc = firestore.collection('users').doc(user.uid);
+
+    final userData = await userDoc.get();
+    if (userData.exists) {
+      final isNew = userData.data()?['isNew'] ?? false;
+      if (isNew) {
+        setState(() {
+          welcomeMessage = 'Welcome, ${user.displayName}';
+        });
       } else {
-        welcomeMessage = 'Welcome Back, $username';
-        message = welcomeMessage;
+        setState(() {
+          welcomeMessage = 'Welcome back, ${user.displayName}';
+        });
       }
     }
-    return message!;
   }
 }

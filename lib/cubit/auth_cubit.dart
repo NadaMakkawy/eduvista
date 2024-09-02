@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:bloc/bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -23,6 +24,8 @@ class AuthCubit extends Cubit<AuthState> {
       );
 
       if (credentials.user != null) {
+        await updateUserStatus(credentials.user!);
+
         if (!context.mounted) return;
 
         ScaffoldMessenger.of(context).showSnackBar(
@@ -84,7 +87,8 @@ class AuthCubit extends Cubit<AuthState> {
         password: passwordController.text,
       );
       if (credentials.user != null) {
-        credentials.user!.updateDisplayName(nameController.text);
+        await updateUserStatus(credentials.user!);
+        await credentials.user!.updateDisplayName(nameController.text);
 
         if (!context.mounted) return;
 
@@ -212,6 +216,22 @@ class AuthCubit extends Cubit<AuthState> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Error: ${e.toString()}')),
       );
+    }
+  }
+
+  Future<void> updateUserStatus(User user) async {
+    final firestore = FirebaseFirestore.instance;
+    final userDoc = firestore.collection('users').doc(user.uid);
+
+    final userData = await userDoc.get();
+    if (!userData.exists) {
+      await userDoc.set({
+        'isNew': true,
+      });
+    } else {
+      await userDoc.update({
+        'isNew': false,
+      });
     }
   }
 }

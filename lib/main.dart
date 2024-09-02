@@ -56,7 +56,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       scrollBehavior: _CustomScrollBehaviour(),
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
+      title: 'Edu Vista',
       theme: ThemeData(
         scaffoldBackgroundColor: ColorUtility.gbScaffold,
         fontFamily: ' PlusJakartaSans',
