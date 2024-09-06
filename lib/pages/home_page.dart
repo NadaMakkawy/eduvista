@@ -1,15 +1,21 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:paymob_payment/paymob_payment.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
-import '../cubit/auth_cubit.dart';
+import '../cubit/auth/auth_cubit.dart';
 
+import '../models/course.dart';
+
+import '../pages/cart_page.dart';
+import '../pages/purchased_courses_page.dart';
+
+import '../widgets/course/clicked_courses_widget.dart';
 import '../widgets/home/categories_widget.dart';
 import '../widgets/course/courses_widget.dart';
 import '../widgets/home/label_widget.dart';
@@ -24,11 +30,20 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   String welcomeMessage = 'Loading...';
+  final List<Course> _clickedCourses = [];
 
   @override
   void initState() {
     _checkUserStatus();
     super.initState();
+  }
+
+  void _onCourseClicked(Course course) {
+    setState(() {
+      if (!_clickedCourses.contains(course)) {
+        _clickedCourses.add(course);
+      }
+    });
   }
 
   @override
@@ -43,6 +58,16 @@ class _HomePageState extends State<HomePage> {
               context.read<AuthCubit>().logout(context: context);
             },
           ),
+          IconButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute<void>(
+                    builder: (BuildContext context) => CartPage(),
+                  ),
+                );
+              },
+              icon: const Icon(Icons.shopping_cart))
         ],
         title: Text(
           welcomeMessage,
@@ -65,8 +90,9 @@ class _HomePageState extends State<HomePage> {
                 name: 'Top Rated Courses',
                 onSeeAllClicked: () {},
               ),
-              const CoursesWidget(
+              CoursesWidget(
                 rankValue: 'top rated',
+                onCourseClick: _onCourseClicked,
               ),
               const SizedBox(
                 height: 20,
@@ -75,9 +101,30 @@ class _HomePageState extends State<HomePage> {
                 name: 'Top Seller Courses',
                 onSeeAllClicked: () {},
               ),
-              const CoursesWidget(
+              CoursesWidget(
                 rankValue: 'top seller',
+                onCourseClick: _onCourseClicked,
               ),
+              if (_clickedCourses.isNotEmpty) ...[
+                LabelWidget(
+                  name: 'Interested Courses',
+                  onSeeAllClicked: () {},
+                ),
+                ClickedCoursesWidget(
+                  clickedCourses: _clickedCourses,
+                ),
+              ],
+              IconButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute<void>(
+                        builder: (BuildContext context) =>
+                            PurchasedCoursesPage(),
+                      ),
+                    );
+                  },
+                  icon: Icon(Icons.menu_book)),
               ElevatedButton(
                   onPressed: () async {
                     var imageResult = await FilePicker.platform

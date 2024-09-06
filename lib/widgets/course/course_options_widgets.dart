@@ -27,30 +27,7 @@ class CourseOptionsWidgets extends StatefulWidget {
 }
 
 class _CourseOptionsWidgetsState extends State<CourseOptionsWidgets> {
-  // @override
-  // Widget build(BuildContext context) {
-  //   switch (widget.courseOption) {
-  //     case CourseOptions.Lecture:
-  //       return FutureBuilder(
-  //           future: FirebaseFirestore.instance
-  //               .collection('courses')
-  //               .doc(widget.course.id)
-  //               .collection('lectures')
-  //               .get(),
-  //           builder: (ctx, snapshot) {
-  //             print('course Id ${widget.course.id}');
-  //             if (snapshot.connectionState == ConnectionState.waiting) {
-  //               return const Center(
-  //                 child: CircularProgressIndicator(),
-  //               );
-  //             }
   late Future<QuerySnapshot<Map<String, dynamic>>> futureCall;
-
-  // if (snapshot.hasError) {
-  //   return const Center(
-  //     child: Text('Error occurred'),
-  //   );
-  // }
 
   @override
   void initState() {
@@ -58,11 +35,6 @@ class _CourseOptionsWidgetsState extends State<CourseOptionsWidgets> {
     super.initState();
   }
 
-  // if (!snapshot.hasData || (snapshot.data?.docs.isEmpty ?? false)) {
-  //   return const Center(
-  //     child: Text('No Lectures found'),
-  //   );
-  // }
   List<Lecture>? lectures;
   bool isLoading = false;
   void init() async {
@@ -79,29 +51,8 @@ class _CourseOptionsWidgetsState extends State<CourseOptionsWidgets> {
     });
   }
 
-  // var lectures = List<Lecture>.from(snapshot.data?.docs
-  //         .map((e) => Lecture.fromJson({'id': e.id, ...e.data()}))
-  //         .toList() ??
-  //     []);
   Lecture? selectedLecture;
 
-  // return GridView.count(
-  //   mainAxisSpacing: 15,
-  //   crossAxisSpacing: 15,
-  //   shrinkWrap: true,
-  //   crossAxisCount: 2,
-  //   children: List.generate(lectures.length, (index) {
-  //     return InkWell(
-  //       onTap: () => widget.onLectureChosen(lectures[index]),
-  //       child: Container(
-  //         padding: const EdgeInsets.all(10),
-  //         decoration: BoxDecoration(
-  //           color: const Color(0xffE0E0E0),
-  //           borderRadius: BorderRadius.circular(40),
-  //         ),
-  //         child: Center(
-  //           child: Text(lectures[index].title ?? 'No Name'),
-  //         ),
   @override
   Widget build(BuildContext context) {
     switch (widget.courseOption) {

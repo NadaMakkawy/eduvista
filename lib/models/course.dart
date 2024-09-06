@@ -16,6 +16,7 @@ class Course {
   double? rating;
   int? total_hours;
   DateTime? created_date;
+  bool? is_clicked;
 
   Course.fromJson(Map<String, dynamic> data) {
     id = data['id'];
@@ -26,6 +27,7 @@ class Course {
     currency = data['currency'];
     rank = data['rank'];
     has_certificate = data['has_certificate'];
+    is_clicked = data['is_clicked'];
     instructor = data['instructor'] != null
         ? Instructor.fromJson(data['instructor'])
         : null;
@@ -50,10 +52,12 @@ class Course {
     data['currency'] = currency;
     data['rank'] = rank;
     data['has_certificate'] = has_certificate;
+    data['is_clicked'] = is_clicked;
     data['instructor'] = instructor?.toJson();
     data['price'] = price;
     data['rating'] = rating;
     data['total_hours'] = total_hours;
+
     return data;
   }
 }

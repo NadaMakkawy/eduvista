@@ -1,13 +1,13 @@
-import 'package:eduvista/utils/image_utility.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:eduvista/utils/image_utility.dart';
+
+import '../pages/login_page.dart';
 
 import '../pages/home_page.dart';
 import '../pages/onboarding_page.dart';
 
 import '../services/pref.service.dart';
-
-import '../pages/login_page.dart';
 
 class SplashPage extends StatefulWidget {
   static String id = 'SplashPage';

@@ -8,9 +8,9 @@ import '../services/pref.service.dart';
 import '../utils/color_utilis.dart';
 
 import '../widgets/auth/custom_elevated_button.dart';
-import '../widgets/onboarding/elevated_button_rounded.dart';
 import '../widgets/onboarding/onboard_indicator.dart';
 import '../widgets/onboarding/onboard_item_widget.dart';
+import '../widgets/onboarding/elevated_button_rounded.dart';
 
 class OnBoardingPage extends StatefulWidget {
   static const String id = 'OnBoardingPage';

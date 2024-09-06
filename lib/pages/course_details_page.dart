@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../bloc/course/course_bloc.dart';
 import '../bloc/lecture/lecture_bloc.dart';
@@ -36,9 +36,10 @@ class _CourseDetailsPageState extends State<CourseDetailsPage> {
   bool applyChanges = false;
 
   void initAnimation() async {
-    await Future.delayed(const Duration(milliseconds: 500));
     if (!mounted) return;
+    await Future.delayed(const Duration(milliseconds: 500));
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      if (!mounted) return;
       setState(() {
         applyChanges = true;
       });

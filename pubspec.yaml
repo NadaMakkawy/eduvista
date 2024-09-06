@@ -52,6 +52,8 @@ dependencies:
   file_picker: ^8.0.7
   paymob_payment: ^0.0.1+1
   flutter_launcher_icons: ^0.13.1
+  flutter_screenutil: ^5.9.3
+  device_preview: ^1.2.0
 
 dev_dependencies:
   flutter_test:
@@ -60,8 +62,20 @@ dev_dependencies:
 flutter_launcher_icons:
   android: "launcher_icon"
   ios: true
-  image_path: "assets/icons/icon.png"
-  min_sdk_android: 21
+  image_path: "assets/icon/icon.png"
+  min_sdk_android: 21 # android min sdk min:16, default 21
+  web:
+    generate: true
+    image_path: "assets/icon/icon.png"
+    background_color: "#hexcode"
+    theme_color: "#hexcode"
+  windows:
+    generate: true
+    image_path: "assets/icon/icon.png"
+    icon_size: 48 # min:48, max:256, default: 48
+  macos:
+    generate: true
+    image_path: "assets/icon/icon.png"
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
   # activated in the `analysis_options.yaml` file located at the root of your
@@ -85,7 +99,7 @@ flutter:
   assets:
     - assets/images/intro/
     - assets/images/logos/
-    - assets/icons/
+    - assets/icon/
 
   #   - images/a_dot_ham.jpeg
 

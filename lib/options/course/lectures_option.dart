@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../models/course.dart';
 import '../../models/lecture.dart';
+
 import '../../utils/app_enums.dart';
 import '../../utils/color_utilis.dart';
 

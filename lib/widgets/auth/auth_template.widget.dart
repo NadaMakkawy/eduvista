@@ -1,5 +1,5 @@
-import 'package:eduvista/utils/image_utility.dart';
 import 'package:flutter/material.dart';
+import 'package:eduvista/utils/image_utility.dart';
 
 import 'custom_text_button.dart';
 

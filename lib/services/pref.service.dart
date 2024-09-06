@@ -22,4 +22,8 @@ abstract class PreferencesService {
 
   static set isOnBoardingSeen(bool value) =>
       prefs!.setBool('isOnBoardingSeen', value);
+
+  static int get selectedIndex => prefs!.getInt('selectedIndex') ?? 0;
+
+  static set selectedIndex(int index) => prefs!.setInt('selectedIndex', index);
 }

@@ -3,6 +3,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../../models/category.dart';
 
+import '../../pages/courses_page.dart';
+
 class CategoriesWidget extends StatefulWidget {
   const CategoriesWidget({super.key});
 
@@ -52,6 +54,12 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
             itemBuilder: (context, index) => InkWell(
               onTap: () async {
                 // Todo add navigation to open new page has all courses related to this category
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) =>
+                        CoursesPage(category: categories[index]),
+                  ),
+                );
               },
               child: Container(
                 padding: const EdgeInsets.all(10),

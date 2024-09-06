@@ -66,8 +66,6 @@ class _ChipWidget extends StatelessWidget {
         style: TextStyle(
             color: isSelected ? Colors.white : Colors.black, fontSize: 17),
       ),
-      // color:
-      //     MaterialStatePropertyAll(ColorUtility.deepYellow),
     );
   }
 }
