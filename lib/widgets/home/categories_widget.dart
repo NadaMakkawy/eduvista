@@ -3,10 +3,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../../models/category.dart';
 
-import '../../pages/courses_page.dart';
+import '../../models/course.dart';
+import '../../pages/category_courses_page.dart';
 
 class CategoriesWidget extends StatefulWidget {
-  const CategoriesWidget({super.key});
+  final Function(Course) onCourseClick;
+
+  const CategoriesWidget({super.key, required this.onCourseClick});
 
   @override
   State<CategoriesWidget> createState() => _CategoriesWidgetState();
@@ -56,8 +59,10 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
                 // Todo add navigation to open new page has all courses related to this category
                 Navigator.of(context).push(
                   MaterialPageRoute(
-                    builder: (context) =>
-                        CoursesPage(category: categories[index]),
+                    builder: (context) => CoursesPage(
+                      category: categories[index],
+                      onCourseClick: widget.onCourseClick,
+                    ),
                   ),
                 );
               },

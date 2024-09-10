@@ -1,3 +1,4 @@
+import 'package:eduvista/pages/all_courses_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:file_picker/file_picker.dart';
@@ -82,33 +83,58 @@ class _HomePageState extends State<HomePage> {
                 name: 'Categories',
                 onSeeAllClicked: () {},
               ),
-              const CategoriesWidget(),
+              CategoriesWidget(onCourseClick: _onCourseClicked),
               const SizedBox(
                 height: 20,
               ),
               LabelWidget(
                 name: 'Top Rated Courses',
-                onSeeAllClicked: () {},
+                onSeeAllClicked: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute<void>(
+                      builder: (BuildContext context) => AllCoursesPage(
+                          // onCourseClick: _onCourseClicked,
+                          ),
+                    ),
+                  );
+                },
               ),
               CoursesWidget(
                 rankValue: 'top rated',
-                onCourseClick: _onCourseClicked,
               ),
               const SizedBox(
                 height: 20,
               ),
               LabelWidget(
                 name: 'Top Seller Courses',
-                onSeeAllClicked: () {},
+                onSeeAllClicked: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute<void>(
+                      builder: (BuildContext context) => AllCoursesPage(
+                          // onCourseClick: _onCourseClicked,
+                          ),
+                    ),
+                  );
+                },
               ),
               CoursesWidget(
                 rankValue: 'top seller',
-                onCourseClick: _onCourseClicked,
               ),
               if (_clickedCourses.isNotEmpty) ...[
                 LabelWidget(
                   name: 'Interested Courses',
-                  onSeeAllClicked: () {},
+                  onSeeAllClicked: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute<void>(
+                        builder: (BuildContext context) => AllCoursesPage(
+                            // onCourseClick: _onCourseClicked,
+                            ),
+                      ),
+                    );
+                  },
                 ),
                 ClickedCoursesWidget(
                   clickedCourses: _clickedCourses,

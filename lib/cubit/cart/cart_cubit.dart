@@ -23,7 +23,8 @@ class CartCubit extends Cubit<List<CartItem>> {
 
     if (existingItem.quantity > 0) {
       // Item already in cart, do not increase the quantity
-      existingItem.quantity;
+      // existingItem.quantity;
+      return;
     } else {
       // Create a new cart document if it doesn't exist
       if (currentCartId == null) {
@@ -60,12 +61,13 @@ class CartCubit extends Cubit<List<CartItem>> {
         .collection('carts')
         .doc(currentCartId)
         .collection('items')
-        .add({
+        // .add({
+        .doc(item.course.id) // Use course ID as document ID
+        .set({
       'course_id': item.course.id,
       'title': item.course.title,
       'price': item.course.price,
       'added_at': Timestamp.now(),
-      'quantity': item.quantity,
     });
   }
 
@@ -111,6 +113,29 @@ class CartCubit extends Cubit<List<CartItem>> {
     currentCartId = await _createNewCart(); // Prepare for a new cart
   }
 
+  // Future<void> purchaseCourses(
+  //     BuildContext context, List<CartItem> cartItems) async {
+  //   // Get current user
+  //   final user = FirebaseAuth.instance.currentUser;
+  //   if (user == null) return;
+
+  //   // Save purchased courses to user's document
+  //   for (var item in cartItems) {
+  //     await FirebaseFirestore.instance
+  //         .collection('users')
+  //         .doc(user.uid)
+  //         .collection('purchased_courses')
+  //         .add({
+  //       'course_id': item.course.id,
+  //       'title': item.course.title,
+  //       'price': item.course.price,
+  //       'purchased_at': Timestamp.now(),
+  //     });
+  //   }
+  //   // Clear the cart after purchase
+  //   clearCart();
+  // }
+
   Future<void> purchaseCourses(
       BuildContext context, List<CartItem> cartItems) async {
     // Get current user
@@ -123,7 +148,8 @@ class CartCubit extends Cubit<List<CartItem>> {
           .collection('users')
           .doc(user.uid)
           .collection('purchased_courses')
-          .add({
+          .doc(item.course.id) // Use course ID as document ID
+          .set({
         'course_id': item.course.id,
         'title': item.course.title,
         'price': item.course.price,
@@ -176,5 +202,60 @@ class CartCubit extends Cubit<List<CartItem>> {
         currentCartId = null;
       }
     }
+  }
+
+  // bool isInCart(Course course) {
+  //   return state.any((item) => item.course.id == course.id);
+  // }
+
+  // Future<bool> isInCart(String courseId) async {
+  //   final user = FirebaseAuth.instance.currentUser;
+  //   if (user == null) return false;
+
+  //   // Check if the course is in the purchased_courses collection
+  //   final purchasedCourseSnapshot = await FirebaseFirestore.instance
+  //       .collection('users')
+  //       .doc(user.uid)
+  //       .collection('carts')
+  //       .doc(courseId) // Check for the specific course ID
+  //       .get();
+
+  //   // Return true if the document exists, false otherwise
+  //   return purchasedCourseSnapshot.exists;
+  // }
+
+  Future<bool> isInCart(String courseId) async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null || currentCartId == null) return false;
+
+    // Check if the course is in the items subcollection of the current cart
+    final cartItemSnapshot = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(user.uid)
+        .collection('carts')
+        .doc(currentCartId)
+        .collection('items')
+        .doc(
+            courseId) // Check for the specific course ID in the items collection
+        .get();
+
+    // Return true if the document exists, false otherwise
+    return cartItemSnapshot.exists;
+  }
+
+  Future<bool> isCoursePurchased(String courseId) async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null) return false;
+
+    // Check if the course is in the purchased_courses collection
+    final purchasedCourseSnapshot = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(user.uid)
+        .collection('purchased_courses')
+        .doc(courseId) // Check for the specific course ID
+        .get();
+
+    // Return true if the document exists, false otherwise
+    return purchasedCourseSnapshot.exists;
   }
 }
