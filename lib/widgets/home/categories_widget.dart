@@ -1,15 +1,61 @@
+// import 'package:eduvista/widgets/home/categories_header_widget.dart';
+// import 'package:flutter/material.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
+
+// import '../../models/category_item.dart';
+
+// class CategoriesWidget extends StatelessWidget {
+//   var futureCall = FirebaseFirestore.instance.collection('categories').get();
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return SizedBox(
+//       height: 40,
+//       child: FutureBuilder(
+//         future: futureCall,
+//         builder: (ctx, snapshot) {
+//           if (snapshot.connectionState == ConnectionState.waiting) {
+//             return const Center(
+//               child: CircularProgressIndicator(),
+//             );
+//           }
+
+//           if (snapshot.hasError) {
+//             return const Center(
+//               child: Text('Error occurred'),
+//             );
+//           }
+
+//           if (!snapshot.hasData || (snapshot.data?.docs.isEmpty ?? false)) {
+//             return const Center(
+//               child: Text('No categories found'),
+//             );
+//           }
+
+//           var categories = List<CategoryItem>.from(snapshot.data?.docs
+//                   .map((e) => CategoryItem.fromJson({'id': e.id, ...e.data()}))
+//                   .toList() ??
+//               []);
+
+//           return CategoriesHeaderWidget(categories: categories);
+//         },
+//       ),
+//     );
+//   }
+// }
+import 'package:eduvista/models/category_item.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import '../../models/category.dart';
+import '../../models/category_item.dart';
 
 import '../../models/course.dart';
 import '../../pages/category_courses_page.dart';
 
 class CategoriesWidget extends StatefulWidget {
-  final Function(Course) onCourseClick;
-
-  const CategoriesWidget({super.key, required this.onCourseClick});
+  const CategoriesWidget({
+    super.key,
+  });
 
   @override
   State<CategoriesWidget> createState() => _CategoriesWidgetState();
@@ -43,8 +89,8 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
             );
           }
 
-          var categories = List<Category>.from(snapshot.data?.docs
-                  .map((e) => Category.fromJson({'id': e.id, ...e.data()}))
+          var categories = List<CategoryItem>.from(snapshot.data?.docs
+                  .map((e) => CategoryItem.fromJson({'id': e.id, ...e.data()}))
                   .toList() ??
               []);
 
@@ -59,9 +105,8 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
                 // Todo add navigation to open new page has all courses related to this category
                 Navigator.of(context).push(
                   MaterialPageRoute(
-                    builder: (context) => CoursesPage(
+                    builder: (context) => CategoryCoursesPage(
                       category: categories[index],
-                      onCourseClick: widget.onCourseClick,
                     ),
                   ),
                 );

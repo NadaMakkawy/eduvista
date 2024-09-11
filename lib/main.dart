@@ -47,8 +47,8 @@ void main() async {
   runApp(
     MultiBlocProvider(
         providers: [
-          BlocProvider(create: (ctx) => AuthCubit()),
-          BlocProvider(create: (context) => CartCubit()),
+          BlocProvider(create: (ctx) => AuthCubit(CartCubit())),
+          BlocProvider(create: (ctx) => CartCubit()),
           BlocProvider(create: (ctx) => CourseBloc()),
           BlocProvider(create: (ctx) => LectureBloc()),
         ],
@@ -71,7 +71,7 @@ class MyApp extends StatelessWidget {
       minTextAdapt: true,
       splitScreenMode: true,
       child: MaterialApp(
-        // ignore: deprecated_member_use
+        // //  ignore: deprecated_member_use
         // useInheritedMediaQuery: true,
         // locale: DevicePreview.locale(context),
         // builder: DevicePreview.appBuilder,

@@ -1,4 +1,6 @@
-import 'package:eduvista/pages/all_courses_page.dart';
+import 'package:eduvista/pages/all_categories_page.dart';
+import 'package:eduvista/utils/color_utilis.dart';
+import 'package:eduvista/widgets/account_info/image_uploader_circle.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:file_picker/file_picker.dart';
@@ -12,9 +14,11 @@ import 'package:firebase_storage/firebase_storage.dart';
 import '../cubit/auth/auth_cubit.dart';
 
 import '../models/course.dart';
+import '../models/category_item.dart';
 
 import '../pages/cart_page.dart';
 import '../pages/purchased_courses_page.dart';
+import '../pages/top_courses_page.dart';
 
 import '../widgets/course/clicked_courses_widget.dart';
 import '../widgets/home/categories_widget.dart';
@@ -36,8 +40,11 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     _checkUserStatus();
+
     super.initState();
   }
+
+  List<CategoryItem>? categories;
 
   void _onCourseClicked(Course course) {
     setState(() {
@@ -46,6 +53,8 @@ class _HomePageState extends State<HomePage> {
       }
     });
   }
+
+  User? user = FirebaseAuth.instance.currentUser;
 
   @override
   Widget build(BuildContext context) {
@@ -70,20 +79,34 @@ class _HomePageState extends State<HomePage> {
               },
               icon: const Icon(Icons.shopping_cart))
         ],
-        title: Text(
-          welcomeMessage,
+        title: Row(
+          children: [
+            ImageUploaderCircle(),
+            SizedBox(width: 10),
+            Text(
+              welcomeMessage,
+            ),
+          ],
         ),
       ),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(10),
           child: ListView(
+            shrinkWrap: true,
             children: [
               LabelWidget(
                 name: 'Categories',
-                onSeeAllClicked: () {},
+                onSeeAllClicked: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute<void>(
+                      builder: (BuildContext context) => AllCategorisPage(),
+                    ),
+                  );
+                },
               ),
-              CategoriesWidget(onCourseClick: _onCourseClicked),
+              CategoriesWidget(),
               const SizedBox(
                 height: 20,
               ),
@@ -93,15 +116,16 @@ class _HomePageState extends State<HomePage> {
                   Navigator.push(
                     context,
                     MaterialPageRoute<void>(
-                      builder: (BuildContext context) => AllCoursesPage(
-                          // onCourseClick: _onCourseClicked,
-                          ),
+                      builder: (BuildContext context) => TopCoursesPage(
+                        rankValue: 'top rated',
+                      ),
                     ),
                   );
                 },
               ),
               CoursesWidget(
-                rankValue: 'top rated',
+                // rankValue: 'top rated',
+                rankValue: null,
               ),
               const SizedBox(
                 height: 20,
@@ -112,9 +136,9 @@ class _HomePageState extends State<HomePage> {
                   Navigator.push(
                     context,
                     MaterialPageRoute<void>(
-                      builder: (BuildContext context) => AllCoursesPage(
-                          // onCourseClick: _onCourseClicked,
-                          ),
+                      builder: (BuildContext context) => TopCoursesPage(
+                        rankValue: 'top seller',
+                      ),
                     ),
                   );
                 },
@@ -129,9 +153,9 @@ class _HomePageState extends State<HomePage> {
                     Navigator.push(
                       context,
                       MaterialPageRoute<void>(
-                        builder: (BuildContext context) => AllCoursesPage(
-                            // onCourseClick: _onCourseClicked,
-                            ),
+                        builder: (BuildContext context) => TopCoursesPage(
+                          rankValue: null,
+                        ),
                       ),
                     );
                   },
@@ -151,34 +175,6 @@ class _HomePageState extends State<HomePage> {
                     );
                   },
                   icon: Icon(Icons.menu_book)),
-              ElevatedButton(
-                  onPressed: () async {
-                    var imageResult = await FilePicker.platform
-                        .pickFiles(type: FileType.image, withData: true);
-                    if (imageResult != null) {
-                      var storageRef = FirebaseStorage.instance
-                          .ref('images/${imageResult.files.first.name}');
-                      var uploadResult = await storageRef.putData(
-                          imageResult.files.first.bytes!,
-                          SettableMetadata(
-                            contentType:
-                                'image/${imageResult.files.first.name.split('.').last}',
-                          ));
-
-                      if (uploadResult.state == TaskState.success) {
-                        var downloadUrl =
-                            await uploadResult.ref.getDownloadURL();
-                        if (kDebugMode) {
-                          print('>>>>>Image upload$downloadUrl');
-                        }
-                      }
-                    } else {
-                      if (kDebugMode) {
-                        print('No file selected');
-                      }
-                    }
-                  },
-                  child: const Text('upload Image')),
               ElevatedButton(
                   onPressed: () async {
                     PaymobPayment.instance.initialize(

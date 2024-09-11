@@ -6,11 +6,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../pages/home_page.dart';
 import '../../pages/login_page.dart';
 import '../../pages/confirm_password_page.dart';
+import '../cart/cart_cubit.dart';
 
 part 'auth_state.dart';
 
 class AuthCubit extends Cubit<AuthState> {
-  AuthCubit() : super(AuthInitial());
+  final CartCubit cartCubit;
+  AuthCubit(this.cartCubit) : super(AuthInitial());
 
   Future<void> login({
     required BuildContext context,
@@ -25,6 +27,7 @@ class AuthCubit extends Cubit<AuthState> {
 
       if (credentials.user != null) {
         await updateUserStatus(credentials.user!);
+        await cartCubit.loadCartItems();
 
         if (!context.mounted) return;
 
@@ -202,6 +205,7 @@ class AuthCubit extends Cubit<AuthState> {
   }) async {
     try {
       await FirebaseAuth.instance.signOut();
+      cartCubit.clearCart();
 
       if (!context.mounted) return;
       Navigator.pushReplacementNamed(context, LoginPage.id);

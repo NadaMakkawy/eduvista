@@ -10,7 +10,7 @@ part 'cart_state.dart';
 
 class CartCubit extends Cubit<List<CartItem>> {
   CartCubit() : super([]) {
-    _loadCartItems();
+    // loadCartItems();
   }
 
   String? currentCartId; // To track the current cart's ID
@@ -161,7 +161,7 @@ class CartCubit extends Cubit<List<CartItem>> {
     clearCart();
   }
 
-  Future<void> _loadCartItems() async {
+  Future<void> loadCartItems() async {
     final user = FirebaseAuth.instance.currentUser;
     if (user == null) return;
 

@@ -1,13 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import 'category.dart';
+import 'category_item.dart';
 import 'instructor.dart';
 
 class Course {
   String? id;
   String? title;
   String? image;
-  Category? category;
+  CategoryItem? category;
   String? currency;
   String? rank;
   bool? has_certificate;
@@ -22,8 +22,9 @@ class Course {
     id = data['id'];
     title = data['title'];
     image = data['image'];
-    category =
-        data['category'] != null ? Category.fromJson(data['category']) : null;
+    category = data['category'] != null
+        ? CategoryItem.fromJson(data['category'])
+        : null;
     currency = data['currency'];
     rank = data['rank'];
     has_certificate = data['has_certificate'];

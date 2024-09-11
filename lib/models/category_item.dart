@@ -1,8 +1,8 @@
-class Category {
+class CategoryItem {
   String? id;
   String? name;
 
-  Category.fromJson(Map<String, dynamic> data) {
+  CategoryItem.fromJson(Map<String, dynamic> data) {
     id = data['id'];
     name = data['name'];
   }

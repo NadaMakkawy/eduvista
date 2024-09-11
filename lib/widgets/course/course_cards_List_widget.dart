@@ -8,6 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../models/cart_item.dart';
+import 'course_card_widget.dart';
 
 // class CourseCardsListWidget extends StatefulWidget {
 //   const CourseCardsListWidget({
@@ -156,88 +157,87 @@ class _CourseCardsListWidgetState extends State<CourseCardsListWidget> {
     return BlocBuilder<CartCubit, List<CartItem>>(
       // Rebuild when CartCubit state changes
       builder: (context, cartItems) {
-        return SizedBox(
-          height: 250.h,
-          child: ListView.builder(
-            scrollDirection: Axis.horizontal,
-            itemBuilder: (context, index) {
-              final course = widget.courses[index];
+        return Padding(
+          padding: const EdgeInsets.all(10),
+          child: SizedBox(
+            height: 250,
+            child: GridView.builder(
+              physics: NeverScrollableScrollPhysics(),
+              // scrollDirection: Axis.horizontal,
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                crossAxisSpacing: 25,
+                mainAxisSpacing: 25,
+                childAspectRatio: 0.7,
+              ),
+              itemCount: widget.courses.length,
+              itemBuilder: (context, index) {
+                final course = widget.courses[index];
 
-              return FutureBuilder<Map<String, bool>>(
-                future:
-                    _getCourseStatus(context, course.id!), // Fetch both states
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(child: CircularProgressIndicator());
-                  }
+                return FutureBuilder<Map<String, bool>>(
+                  future: _getCourseStatus(
+                      context, course.id!), // Fetch both states
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const Center(child: CircularProgressIndicator());
+                    }
 
-                  if (snapshot.hasError) {
-                    return const Center(child: Text('Error occurred'));
-                  }
+                    if (snapshot.hasError) {
+                      return const Center(child: Text('Error occurred'));
+                    }
 
-                  final isPurchased = snapshot.data?['isPurchased'] ?? false;
-                  final isInCart = snapshot.data?['isInCart'] ?? false;
+                    final isPurchased = snapshot.data?['isPurchased'] ?? false;
+                    final isInCart = snapshot.data?['isInCart'] ?? false;
 
-                  return InkWell(
-                    onTap: () async {
-                      await FirebaseFirestore.instance
-                          .collection('courses')
-                          .doc(course.id)
-                          .update({'is_clicked': true});
-
-                      // widget.courses[index].is_clicked = true;
-
-                      // widget.onCourseClick(widget.courses[index]);
-                      Navigator.pushNamed(context, CourseDetailsPage.id,
-                          arguments: widget.courses[index]);
-                    },
-                    child: Column(
-                      children: [
-                        SizedBox(
-                          height: 100.h,
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(40),
-                            child: Image.network(
-                              course.image ?? 'No Image',
-                              fit: BoxFit.fill,
-                            ),
-                          ),
-                        ),
-                        const SizedBox(height: 20),
-                        Text(course.instructor?.name ?? 'No Instructor'),
-                        const SizedBox(height: 10),
-                        Text(course.title ?? 'No Title'),
-                        const SizedBox(height: 10),
-                        Text('\$${course.price?.toStringAsFixed(2)}'),
-                        const SizedBox(height: 10),
-                        isPurchased
-                            ? const Text(
-                                'Purchased',
-                                style: TextStyle(color: Colors.green),
-                              )
-                            : isInCart
-                                ? Text(
-                                    'In Cart',
-                                    style: TextStyle(
-                                        color: ColorUtility.deepYellow),
-                                  )
-                                : ElevatedButton(
-                                    onPressed: () {
-                                      context
-                                          .read<CartCubit>()
-                                          .addToCart(course);
-                                    },
-                                    child: const Text('Add to Cart'),
-                                  ),
-                      ],
-                    ),
-                  );
-                },
-              );
-            },
-            itemCount: widget.courses.length,
+                    return CourseCard(
+                      course: course,
+                      widget: widget,
+                      isPurchased: isPurchased,
+                      isInCart: isInCart,
+                      index: index,
+                      courses: widget.courses,
+                    );
+                  },
+                );
+              },
+            ),
           ),
         );
+        // return SizedBox(
+        //   height: 250.h,
+        //   child: ListView.builder(
+        //     scrollDirection: Axis.horizontal,
+        //     itemBuilder: (context, index) {
+        //       final course = widget.courses[index];
+
+        //       return FutureBuilder<Map<String, bool>>(
+        //         future:
+        //             _getCourseStatus(context, course.id!), // Fetch both states
+        //         builder: (context, snapshot) {
+        //           if (snapshot.connectionState == ConnectionState.waiting) {
+        //             return const Center(child: CircularProgressIndicator());
+        //           }
+
+        //           if (snapshot.hasError) {
+        //             return const Center(child: Text('Error occurred'));
+        //           }
+
+        //           final isPurchased = snapshot.data?['isPurchased'] ?? false;
+        //           final isInCart = snapshot.data?['isInCart'] ?? false;
+
+        //           return CourseCard(
+        //             course: course,
+        //             widget: widget,
+        //             isPurchased: isPurchased,
+        //             isInCart: isInCart,
+        //             index: index,
+        //           );
+        //         },
+        //       );
+        //     },
+        //     itemCount: widget.courses.length,
+        //   ),
+        // );
       },
     );
   }
@@ -253,3 +253,75 @@ class _CourseCardsListWidgetState extends State<CourseCardsListWidget> {
     }; // Return both as a map
   }
 }
+
+// class CourseCard extends StatelessWidget {
+//   const CourseCard({
+//     super.key,
+//     required this.course,
+//     required this.widget,
+//     required this.isPurchased,
+//     required this.isInCart,
+//     required this.index,
+//   });
+
+//   final Course course;
+//   final CourseCardsListWidget widget;
+//   final bool isPurchased;
+//   final bool isInCart;
+//   final int index;
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return InkWell(
+//       onTap: () async {
+//         await FirebaseFirestore.instance
+//             .collection('courses')
+//             .doc(course.id)
+//             .update({'is_clicked': true});
+
+//         // widget.courses[index].is_clicked = true;
+
+//         // widget.onCourseClick(widget.courses[index]);
+//         Navigator.pushNamed(context, CourseDetailsPage.id,
+//             arguments: widget.courses[index]);
+//       },
+//       child: Column(
+//         children: [
+//           SizedBox(
+//             height: 100.h,
+//             child: ClipRRect(
+//               borderRadius: BorderRadius.circular(40),
+//               child: Image.network(
+//                 course.image ?? 'No Image',
+//                 fit: BoxFit.fill,
+//               ),
+//             ),
+//           ),
+//           const SizedBox(height: 20),
+//           Text(course.instructor?.name ?? 'No Instructor'),
+//           const SizedBox(height: 10),
+//           Text(course.title ?? 'No Title'),
+//           const SizedBox(height: 10),
+//           Text('\$${course.price?.toStringAsFixed(2)}'),
+//           const SizedBox(height: 10),
+//           isPurchased
+//               ? const Text(
+//                   'Purchased',
+//                   style: TextStyle(color: Colors.green),
+//                 )
+//               : isInCart
+//                   ? Text(
+//                       'In Cart',
+//                       style: TextStyle(color: ColorUtility.deepYellow),
+//                     )
+//                   : ElevatedButton(
+//                       onPressed: () {
+//                         context.read<CartCubit>().addToCart(course);
+//                       },
+//                       child: const Text('Add to Cart'),
+//                     ),
+//         ],
+//       ),
+//     );
+//   }
+// }

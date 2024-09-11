@@ -69,8 +69,6 @@ class _CourseOptionsWidgetsState extends State<CourseOptionsWidgets> {
         } else {
           return LecturesOption(
               lectures: lectures,
-              course: widget.course,
-              courseOption: widget.courseOption,
               onLectureChosen: widget.onLectureChosen,
               selectedLecture: selectedLecture);
         }

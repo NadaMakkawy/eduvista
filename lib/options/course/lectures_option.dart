@@ -1,22 +1,16 @@
 import 'package:flutter/material.dart';
 
-import '../../models/course.dart';
 import '../../models/lecture.dart';
 
-import '../../utils/app_enums.dart';
 import '../../utils/color_utilis.dart';
 
 class LecturesOption extends StatefulWidget {
   final List<Lecture>? lectures;
-  final CourseOptions courseOption;
-  final Course course;
   final void Function(Lecture) onLectureChosen;
   Lecture? selectedLecture;
 
   LecturesOption(
       {required this.lectures,
-      required this.course,
-      required this.courseOption,
       required this.onLectureChosen,
       required this.selectedLecture,
       super.key});
@@ -40,6 +34,7 @@ class _LecturesOptionState extends State<LecturesOption> {
             onTap: () {
               widget.onLectureChosen(widget.lectures![index]);
               widget.selectedLecture = widget.lectures![index];
+
               setState(() {});
             },
             child: Container(

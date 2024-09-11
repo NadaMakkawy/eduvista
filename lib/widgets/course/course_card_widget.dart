@@ -1,15 +1,43 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eduvista/utils/color_utilis.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../cubit/cart/cart_cubit.dart';
+import '../../models/course.dart';
+import '../../pages/course_details_page.dart';
+import 'course_cards_List_widget.dart';
 
 class CourseCard extends StatelessWidget {
+  final Course course;
+  final CourseCardsListWidget widget;
+  final bool isPurchased;
+  final bool isInCart;
+  final int index;
+  final List<Course> courses;
+
+  const CourseCard({
+    super.key,
+    required this.course,
+    required this.widget,
+    required this.isPurchased,
+    required this.isInCart,
+    required this.index,
+    required this.courses,
+  });
+
   @override
   Widget build(BuildContext context) {
-    return Card(
-      color: Colors.transparent,
-      elevation: 0,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
-      ),
+    return InkWell(
+      onTap: () async {
+        await FirebaseFirestore.instance
+            .collection('courses')
+            .doc(course.id)
+            .update({'is_clicked': true});
+
+        Navigator.pushNamed(context, CourseDetailsPage.id,
+            arguments: widget.courses[index]);
+      },
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -17,7 +45,7 @@ class CourseCard extends StatelessWidget {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(10),
               child: Image.network(
-                'https://via.placeholder.com/150',
+                course.image ?? 'https://via.placeholder.com/150',
                 fit: BoxFit.cover,
                 width: double.infinity,
               ),
@@ -31,20 +59,16 @@ class CourseCard extends StatelessWidget {
                 Row(
                   children: [
                     Text(
-                      '4.5',
+                      course.rating.toString(),
                       style: TextStyle(fontSize: 14, color: ColorUtility.gray),
                     ),
                     SizedBox(width: 5),
-                    Icon(Icons.star, color: Colors.amber, size: 16),
-                    Icon(Icons.star, color: Colors.amber, size: 16),
-                    Icon(Icons.star, color: Colors.amber, size: 16),
-                    Icon(Icons.star, color: Colors.amber, size: 16),
-                    Icon(Icons.star_half, color: Colors.amber, size: 16),
+                    _RatingDisplay(rating: widget.courses[index].rating!),
                   ],
                 ),
                 SizedBox(height: 4),
                 Text(
-                  'UI/UX Design',
+                  course.title ?? 'No Title',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 16,
@@ -58,26 +82,93 @@ class CourseCard extends StatelessWidget {
                       color: ColorUtility.gray,
                     ),
                     Text(
-                      'Stephen Moris',
+                      course.instructor?.name ?? 'No Instructor',
                       style: TextStyle(
                         color: Colors.black,
                       ),
                     ),
                   ],
                 ),
-                Text(
-                  '\$14.50',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: ColorUtility.main,
-                    fontSize: 18,
-                  ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      '\$${course.price?.toStringAsFixed(2)}',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: ColorUtility.main,
+                        fontSize: 18,
+                      ),
+                    ),
+                    isPurchased
+                        ? Text(
+                            'Purchased',
+                            style: TextStyle(color: Colors.green),
+                          )
+                        : isInCart
+                            ? Text(
+                                'In Cart',
+                                style:
+                                    TextStyle(color: ColorUtility.deepYellow),
+                              )
+                            : GestureDetector(
+                                child: CircleAvatar(
+                                  radius: 15,
+                                  backgroundColor: Colors.transparent,
+                                  child: Icon(
+                                    Icons.add,
+                                    color: ColorUtility.main,
+                                    size: 20,
+                                  ),
+                                ),
+                                onTap: () {
+                                  context.read<CartCubit>().addToCart(course);
+                                },
+                              ),
+                  ],
                 ),
               ],
             ),
           )
         ],
       ),
+    );
+  }
+}
+
+class _RatingDisplay extends StatelessWidget {
+  final double rating;
+
+  _RatingDisplay({required this.rating});
+
+  @override
+  Widget build(BuildContext context) {
+    int fullStars = rating.floor();
+    bool hasHalfStar = rating % 1 >= 0.5;
+
+    return Row(
+      children: [
+        ...List.generate(
+            fullStars,
+            (index) => Icon(
+                  Icons.star,
+                  color: ColorUtility.main,
+                  size: 16,
+                )),
+        if (hasHalfStar)
+          Icon(
+            Icons.star_half,
+            color: ColorUtility.main,
+            size: 16,
+          ),
+        ...List.generate(
+            5 - fullStars - (hasHalfStar ? 1 : 0),
+            (index) => Icon(
+                  Icons.star_border,
+                  color: ColorUtility.main,
+                  size: 16,
+                )),
+      ],
     );
   }
 }

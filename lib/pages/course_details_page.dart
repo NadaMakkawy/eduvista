@@ -178,7 +178,7 @@ class __BodyWidgetState extends State<_BodyWidget> {
                       ? CourseOptionsWidgets(
                           course: context.read<CourseBloc>().course!,
                           courseOption: state.courseOption,
-                          onLectureChosen: (lecture) async {
+                          onLectureChosen: (lecture) {
                             try {
                               FirebaseFirestore.instance
                                   .collection('course_user_progress')

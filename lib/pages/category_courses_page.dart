@@ -8,10 +8,10 @@
 // import '../models/course.dart';
 // import '../models/category.dart';
 
-// class CoursesPage extends StatelessWidget {
+// class CategoryCoursesPage extends StatelessWidget {
 //   final Category category;
 
-//   const CoursesPage({Key? key, required this.category}) : super(key: key);
+//   const CategoryCoursesPage({Key? key, required this.category}) : super(key: key);
 
 //   @override
 //   Widget build(BuildContext context) {
@@ -163,10 +163,10 @@
 // // import '../models/course.dart';
 // // import '../models/category.dart';
 
-// // class CoursesPage extends StatelessWidget {
+// // class CategoryCoursesPage extends StatelessWidget {
 // //   final Category category;
 
-// //   const CoursesPage({Key? key, required this.category}) : super(key: key);
+// //   const CategoryCoursesPage({Key? key, required this.category}) : super(key: key);
 
 // //   @override
 // //   Widget build(BuildContext context) {
@@ -271,127 +271,23 @@
 // //   }
 // // }
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:eduvista/widgets/home/courses_of_category_get_widget.dart';
 
-import '../models/course.dart';
-import '../models/category.dart';
-import '../widgets/course/course_cards_List_widget.dart';
+import '../models/category_item.dart';
 
-class CoursesPage extends StatelessWidget {
-  final Category category;
-  final Function(Course) onCourseClick;
+class CategoryCoursesPage extends StatelessWidget {
+  final CategoryItem category;
 
-  const CoursesPage(
-      {Key? key, required this.category, required this.onCourseClick})
-      : super(key: key);
+  const CategoryCoursesPage({
+    Key? key,
+    required this.category,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('Courses in ${category.name}')),
-      body: FutureBuilder(
-        future: FirebaseFirestore.instance
-            .collection('courses')
-            .where('category.id', isEqualTo: category.id)
-            .get(),
-        builder: (ctx, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          }
-
-          if (snapshot.hasError) {
-            return const Center(child: Text('Error occurred'));
-          }
-
-          if (!snapshot.hasData || (snapshot.data?.docs.isEmpty ?? false)) {
-            return const Center(child: Text('No courses found'));
-          }
-
-          var courses = List<Course>.from(snapshot.data?.docs
-                  .map((e) => Course.fromJson({'id': e.id, ...e.data()}))
-                  .toList() ??
-              []);
-
-          // return SizedBox(
-          //   height: 250.h,
-          //   child: ListView.builder(
-          //     scrollDirection: Axis.horizontal,
-          //     itemBuilder: (context, index) {
-          //       final course = courses[index];
-
-          //       return FutureBuilder<bool>(
-          //         future:
-          //             context.read<CartCubit>().isCoursePurchased(course.id!),
-          //         builder: (context, purchaseSnapshot) {
-          //           if (purchaseSnapshot.connectionState ==
-          //               ConnectionState.waiting) {
-          //             return const Center(child: CircularProgressIndicator());
-          //           }
-
-          //           // If there was an error checking purchase status
-          //           if (purchaseSnapshot.hasError) {
-          //             return const Center(child: Text('Error occurred'));
-          //           }
-
-          //           final isPurchased = purchaseSnapshot.data ?? false;
-
-          //           return InkWell(
-          //             onTap: () async {
-          //               await FirebaseFirestore.instance
-          //                   .collection('courses')
-          //                   .doc(course.id)
-          //                   .update({'is_clicked': true});
-
-          //               course.is_clicked = true;
-
-          //               // Trigger the course click callback
-          //               // Navigator.pushNamed(context, CourseDetailsPage.id,
-          //               //     arguments: course);
-          //             },
-          //             child: Column(
-          //               children: [
-          //                 SizedBox(
-          //                   height: 100.h,
-          //                   child: ClipRRect(
-          //                     borderRadius: BorderRadius.circular(40),
-          //                     child: Image.network(
-          //                       course.image ?? 'No Image',
-          //                       fit: BoxFit.fill,
-          //                     ),
-          //                   ),
-          //                 ),
-          //                 const SizedBox(height: 20),
-          //                 Text(course.instructor?.name ?? 'No Instructor'),
-          //                 const SizedBox(height: 10),
-          //                 Text(course.title ?? 'No Title'),
-          //                 const SizedBox(height: 10),
-          //                 Text('\$${course.price?.toStringAsFixed(2)}'),
-
-          //                 // Show the Add to Cart button only if the course is not purchased
-          //                 if (!isPurchased)
-          //                   ElevatedButton(
-          //                     onPressed: () {
-          //                       context.read<CartCubit>().addToCart(course);
-          //                     },
-          //                     child: const Text('Add to Cart'),
-          //                   )
-          //                 else
-          //                   const Text('Purchased',
-          //                       style: TextStyle(color: Colors.green)),
-          //               ],
-          //             ),
-          //           );
-          //         },
-          //       );
-          //     },
-          //     itemCount: courses.length,
-          //   ),
-          // );
-          return CourseCardsListWidget(
-            courses: courses,
-          );
-        },
-      ),
+      body: CoursesOfCategoryGetWidget(category: category),
     );
   }
 }
