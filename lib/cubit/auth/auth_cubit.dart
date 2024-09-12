@@ -1,3 +1,4 @@
+import 'package:eduvista/pages/main_page.dart';
 import 'package:flutter/material.dart';
 import 'package:bloc/bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -37,7 +38,7 @@ class AuthCubit extends Cubit<AuthState> {
           ),
         );
 
-        Navigator.pushReplacementNamed(context, HomePage.id);
+        Navigator.pushReplacementNamed(context, MainPage.id);
       }
     } on FirebaseAuthException catch (e) {
       if (!context.mounted) return;

@@ -31,6 +31,8 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   String welcomeMessage = 'Loading...';
   final List<Course> _clickedCourses = [];
+  List<CategoryItem>? categories;
+  User? user = FirebaseAuth.instance.currentUser;
 
   @override
   void initState() {
@@ -38,10 +40,6 @@ class _HomePageState extends State<HomePage> {
 
     super.initState();
   }
-
-  List<CategoryItem>? categories;
-
-  User? user = FirebaseAuth.instance.currentUser;
 
   @override
   Widget build(BuildContext context) {
@@ -79,91 +77,78 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(10),
-          child: ListView(
-            shrinkWrap: true,
-            children: [
-              LabelWidget(
-                name: 'Categories',
-                onSeeAllClicked: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute<void>(
-                      builder: (BuildContext context) => AllCategorisPage(),
-                    ),
-                  );
-                },
-              ),
-              CategoriesWidget(),
-              const SizedBox(
-                height: 20,
-              ),
-              LabelWidget(
-                name: 'Top Rated Courses',
-                onSeeAllClicked: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute<void>(
-                      builder: (BuildContext context) => TopCoursesPage(
-                        rankValue: 'top rated',
-                      ),
-                    ),
-                  );
-                },
-              ),
-              CoursesWidget(
-                rankValue: 'top rated',
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              LabelWidget(
-                name: 'Top Seller Courses',
-                onSeeAllClicked: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute<void>(
-                      builder: (BuildContext context) => TopCoursesPage(
-                        rankValue: 'top seller',
-                      ),
-                    ),
-                  );
-                },
-              ),
-              CoursesWidget(
-                rankValue: 'top seller',
-              ),
-              if (_clickedCourses.isNotEmpty) ...[
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(10),
+            child: Column(
+              children: [
                 LabelWidget(
-                  name: 'Interested Courses',
+                  name: 'Categories',
+                  onSeeAllClicked: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute<void>(
+                        builder: (BuildContext context) => AllCategorisPage(),
+                      ),
+                    );
+                  },
+                ),
+                CategoriesWidget(),
+                const SizedBox(
+                  height: 20,
+                ),
+                LabelWidget(
+                  name: 'Top Rated Courses',
                   onSeeAllClicked: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute<void>(
                         builder: (BuildContext context) => TopCoursesPage(
-                          rankValue: null,
+                          rankValue: 'top rated',
                         ),
                       ),
                     );
                   },
                 ),
-                ClickedCoursesWidget(
-                  clickedCourses: _clickedCourses,
+                CoursesWidget(
+                  rankValue: 'top rated',
                 ),
+                LabelWidget(
+                  name: 'Top Seller Courses',
+                  onSeeAllClicked: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute<void>(
+                        builder: (BuildContext context) => TopCoursesPage(
+                          rankValue: 'top seller',
+                        ),
+                      ),
+                    );
+                  },
+                ),
+                CoursesWidget(
+                  rankValue: 'top seller',
+                ),
+                if (_clickedCourses.isNotEmpty) ...[
+                  LabelWidget(
+                    name: 'Interested Courses',
+                    onSeeAllClicked: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute<void>(
+                          builder: (BuildContext context) => TopCoursesPage(
+                            rankValue: null,
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                  ClickedCoursesWidget(
+                    clickedCourses: _clickedCourses,
+                  ),
+                ],
               ],
-              IconButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute<void>(
-                      builder: (BuildContext context) => PurchasedCoursesPage(),
-                    ),
-                  );
-                },
-                icon: Icon(Icons.menu_book),
-              ),
-            ],
+            ),
           ),
         ),
       ),

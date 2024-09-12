@@ -413,6 +413,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  forex_currency_conversion:
+    dependency: "direct main"
+    description:
+      name: forex_currency_conversion
+      sha256: b0753f6c4825cacb90a9ae052ee811712f379af5453d9d6cada887637d5c32f6
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.9.0"
   freezed_annotation:
     dependency: transitive
     description:
@@ -433,10 +441,10 @@ packages:
     dependency: transitive
     description:
       name: http
-      sha256: b9c29a161230ee03d3ccf545097fccd9b87a5264228c5d348202e0f0c28f9010
+      sha256: "5895291c13fa8a3bd82e76d5627f69e0d85ca6a30dcac95c4ea19a5d555879c2"
       url: "https://pub.dev"
     source: hosted
-    version: "1.2.2"
+    version: "0.13.6"
   http_parser:
     dependency: transitive
     description:
@@ -549,6 +557,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.3.3+2"
+  money_converter:
+    dependency: "direct main"
+    description:
+      name: money_converter
+      sha256: c99588a7e2b93004036895f4e9de282f7f371ebedc1617ab4aa7287ee0e90177
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.2"
   nested:
     dependency: transitive
     description:

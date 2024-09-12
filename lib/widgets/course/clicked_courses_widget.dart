@@ -22,7 +22,6 @@ class _ClickedCoursesWidgetState extends State<ClickedCoursesWidget> {
   void initState() {
     futureCall = FirebaseFirestore.instance
         .collection('courses')
-        .where('is_clicked', isEqualTo: true)
         .orderBy('created_date', descending: true)
         .get();
     super.initState();

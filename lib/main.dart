@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:eduvista/pages/main_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -137,10 +138,11 @@ class MyApp extends StatelessWidget {
                   builder: (context) => TopCoursesPage(
                         rankValue: data,
                       ));
+            case MainPage.id:
+              return MaterialPageRoute(builder: (context) => MainPage());
 
             default:
-              return MaterialPageRoute(
-                  builder: (context) => const OnBoardingPage());
+              return MaterialPageRoute(builder: (context) => const MainPage());
           }
         },
         initialRoute: SplashPage.id,

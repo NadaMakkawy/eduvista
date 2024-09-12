@@ -28,7 +28,7 @@ class PayCubit extends Cubit<PayState> {
 
     final PaymobResponse? response = await PaymobPayment.instance.pay(
       context: context,
-      currency: 'EGP',
+      currency: currency,
       amountInCents: (totalPrice * 100).toString(), // 200 EGP
     );
 
