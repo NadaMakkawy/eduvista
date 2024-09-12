@@ -82,7 +82,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
               height: MediaQuery.of(context).size.height / 20,
             ),
             Expanded(
-              flex: 2,
+              flex: 3,
               child: PageView(
                 physics: const NeverScrollableScrollPhysics(),
                 controller: _pageController,
@@ -100,9 +100,9 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                     description: 'Check your Progress of every course',
                   ),
                   OnBoardItemWidget(
-                    title: 'Of f line Acc ess',
+                    title: 'Offline Access',
                     image: IntroImageUtils.offLine,
-                    description: 'Of f line Acc ess',
+                    description: 'Offline Access',
                   ),
                   OnBoardItemWidget(
                     title: 'Course Catalog',
