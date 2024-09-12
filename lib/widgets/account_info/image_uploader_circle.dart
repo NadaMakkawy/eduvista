@@ -7,6 +7,9 @@ import '../../cubit/image/image_cubit.dart';
 import '../../cubit/image/image_state.dart';
 
 class ImageUploaderCircle extends StatelessWidget {
+  Function()? onTap;
+  ImageUploaderCircle({required this.onTap});
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -44,7 +47,7 @@ class ImageUploaderCircle extends StatelessWidget {
                       : null,
               backgroundColor: ColorUtility.deepYellow,
             ),
-            onTap: () => context.read<ImageCubit>().pickAndUploadImage(),
+            onTap: onTap,
           );
         },
       ),

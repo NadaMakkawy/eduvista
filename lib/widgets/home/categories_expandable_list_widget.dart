@@ -41,20 +41,31 @@ class _CategoriesExpandableListWidgetState
       ),
       margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
       child: ExpansionTile(
-        title: Text(
-          widget.categories[widget.index].name ?? 'No Name',
-          style: TextStyle(
-            color: _isExpanded ? ColorUtility.deepYellow : Colors.black,
-            fontWeight: FontWeight.w600,
-            fontSize: 16,
+        title: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8),
+            border: _isExpanded
+                ? Border.all(color: ColorUtility.deepYellow, width: 2)
+                : null,
+          ),
+          child: ListTile(
+            leading: Text(
+              widget.categories[widget.index].name ?? 'No Name',
+              style: TextStyle(
+                color: _isExpanded ? ColorUtility.deepYellow : Colors.black,
+                fontWeight: FontWeight.w600,
+                fontSize: 16,
+              ),
+            ),
+            trailing: Icon(
+              _isExpanded
+                  ? Icons.keyboard_double_arrow_down
+                  : Icons.keyboard_double_arrow_right,
+              color: _isExpanded ? ColorUtility.deepYellow : Colors.black,
+            ),
           ),
         ),
-        trailing: Icon(
-          _isExpanded
-              ? Icons.keyboard_double_arrow_down
-              : Icons.keyboard_double_arrow_right,
-          color: _isExpanded ? ColorUtility.deepYellow : Colors.black,
-        ),
+        trailing: SizedBox.shrink(),
         onExpansionChanged: (bool expanded) {
           setState(() {
             _isExpanded = expanded;

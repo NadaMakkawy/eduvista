@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 
+import '../widgets/account_info/image_uploader_circle.dart';
+
+import '../utils/color_utilis.dart';
+
+import '../pages/all_categories_page.dart';
 import '../pages/home_page.dart';
 import '../pages/purchased_courses_page.dart';
 
@@ -13,10 +19,16 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
+  final List<IconData> _iconList = [
+    Icons.home,
+    Icons.search,
+    Icons.import_contacts_outlined,
+  ];
   int _selectedIndex = 0;
 
   final List<Widget> _pages = [
     HomePage(),
+    AllCategorisPage(),
     PurchasedCoursesPage(),
   ];
 
@@ -24,23 +36,30 @@ class _MainPageState extends State<MainPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: _pages[_selectedIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.menu_book_outlined),
-            label: 'My Courses',
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        onTap: (index) {
-          setState(() {
-            _selectedIndex = index;
-          });
+      bottomNavigationBar: AnimatedBottomNavigationBar.builder(
+        itemCount: _iconList.length + 1,
+        tabBuilder: (int index, bool isActive) {
+          if (index == _iconList.length) {
+            return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ImageUploaderCircle(
+                  onTap: () {
+                    Navigator.pushReplacementNamed(context, MainPage.id);
+                  },
+                ));
+          }
+          return Icon(
+            _iconList[index],
+            color: isActive ? ColorUtility.deepYellow : Colors.black,
+            size: 30,
+          );
         },
+        activeIndex: _selectedIndex,
+        onTap: (index) => setState(() => _selectedIndex = index),
+        gapLocation: GapLocation.none,
+        notchSmoothness: NotchSmoothness.smoothEdge,
+        leftCornerRadius: 32,
+        rightCornerRadius: 32,
       ),
     );
   }

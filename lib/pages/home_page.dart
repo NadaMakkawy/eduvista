@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../cubit/auth/auth_cubit.dart';
+import '../cubit/image/image_cubit.dart';
 
 import '../models/course.dart';
 import '../models/category_item.dart';
@@ -66,7 +67,9 @@ class _HomePageState extends State<HomePage> {
         title: FittedBox(
           child: Row(
             children: [
-              ImageUploaderCircle(),
+              ImageUploaderCircle(
+                onTap: () => context.read<ImageCubit>().pickAndUploadImage(),
+              ),
               SizedBox(width: 10),
               Text(
                 welcomeMessage,

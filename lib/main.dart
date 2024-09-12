@@ -89,7 +89,7 @@ class MyApp extends StatelessWidget {
         title: 'Edu Vista',
         theme: ThemeData(
           scaffoldBackgroundColor: ColorUtility.gbScaffold,
-          appBarTheme: AppBarTheme(backgroundColor: Colors.white),
+          appBarTheme: AppBarTheme(backgroundColor: ColorUtility.gbScaffold),
           fontFamily: ' PlusJakartaSans',
           colorScheme: ColorScheme.fromSeed(seedColor: ColorUtility.main),
           useMaterial3: true,
