@@ -1,11 +1,12 @@
 import 'dart:ui';
 
+
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:device_preview/device_preview.dart';
+// import 'package:device_preview/device_preview.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../firebase_options.dart';
@@ -16,8 +17,12 @@ import '../pages/login_page.dart';
 import '../pages/signup_page.dart';
 import '../pages/splash_page.dart';
 import '../pages/onboarding_page.dart';
+import '../pages/top_courses_page.dart';
+import '../pages/all_categories_page.dart';
 import '../pages/reset_password_page.dart';
 import '../pages/course_details_page.dart';
+import '../pages/category_courses_page.dart';
+import '../pages/confirm_password_page.dart';
 import '../pages/purchased_courses_page.dart';
 
 import '../services/pref.service.dart';
@@ -55,13 +60,13 @@ void main() async {
       BlocProvider(create: (ctx) => CourseBloc()),
       BlocProvider(create: (ctx) => LectureBloc()),
     ],
-    child: DevicePreview(
-      enabled: !kReleaseMode,
-      builder: (context) => MyApp(),
-    ),
-    // child: const MyApp()),
-    // );
-  ));
+    // child: DevicePreview(
+    //   enabled: !kReleaseMode,
+    //   builder: (context) => MyApp(),
+    // ),
+    child: const MyApp()),
+    );
+  // ));
 }
 
 class MyApp extends StatelessWidget {
@@ -74,10 +79,10 @@ class MyApp extends StatelessWidget {
       minTextAdapt: true,
       splitScreenMode: true,
       child: MaterialApp(
-        //  ignore: deprecated_member_use
-        useInheritedMediaQuery: true,
-        locale: DevicePreview.locale(context),
-        builder: DevicePreview.appBuilder,
+        // //  ignore: deprecated_member_use
+        // useInheritedMediaQuery: true,
+        // locale: DevicePreview.locale(context),
+        // builder: DevicePreview.appBuilder,
         scrollBehavior: _CustomScrollBehaviour(),
         debugShowCheckedModeBanner: false,
         title: 'Edu Vista',
@@ -115,9 +120,26 @@ class MyApp extends StatelessWidget {
             case PurchasedCoursesPage.id:
               return MaterialPageRoute(
                   builder: (context) => PurchasedCoursesPage());
+            case AllCategorisPage.id:
+              return MaterialPageRoute(
+                  builder: (context) => AllCategorisPage());
+            case CategoryCoursesPage.id:
+              return MaterialPageRoute(
+                  builder: (context) => CategoryCoursesPage(
+                        category: data,
+                      ));
+            case ConfirmPasswrdPage.id:
+              return MaterialPageRoute(
+                  builder: (context) => ConfirmPasswrdPage());
+            case TopCoursesPage.id:
+              return MaterialPageRoute(
+                  builder: (context) => TopCoursesPage(
+                        rankValue: data,
+                      ));
+
             default:
               return MaterialPageRoute(
-                  builder: (context) => const SplashPage());
+                  builder: (context) => const OnBoardingPage());
           }
         },
         initialRoute: SplashPage.id,

@@ -44,4 +44,4 @@ app.*.map.json
 
 
 # Ignore dot env file
-.env
+*.env

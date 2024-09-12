@@ -19,11 +19,11 @@ class PayCubit extends Cubit<PayState> {
       List<CartItem> cartItems) async {
     PaymobPayment.instance.initialize(
       apiKey: dotenv.env[
-          'paymobapiKey']!, // from dashboard Select Settings -> Account Info -> API Key
+          'apiKey']!, // from dashboard Select Settings -> Account Info -> API Key
       integrationID: int.parse(dotenv.env[
-          'paymobintegrationID']!), // from dashboard Select Developers -> Payment Integrations -> Online Card ID
-      iFrameID: int.parse(dotenv
-          .env['paymobiFrameID']!), // from paymob Select Developers -> iframes
+          'integrationID']!), // from dashboard Select Developers -> Payment Integrations -> Online Card ID
+      iFrameID: int.parse(
+          dotenv.env['iFrameID']!), // from paymob Select Developers -> iframes
     );
 
     final PaymobResponse? response = await PaymobPayment.instance.pay(

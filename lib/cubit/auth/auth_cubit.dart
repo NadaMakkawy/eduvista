@@ -74,6 +74,7 @@ class AuthCubit extends Cubit<AuthState> {
           content: Text('Something went wrong'),
         ),
       );
+      print(e);
     }
   }
 

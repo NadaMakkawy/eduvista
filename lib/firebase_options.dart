@@ -3,7 +3,6 @@
 import 'package:firebase_core/firebase_core.dart' show FirebaseOptions;
 import 'package:flutter/foundation.dart'
     show defaultTargetPlatform, kIsWeb, TargetPlatform;
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 /// Default [FirebaseOptions] for use with your Firebase apps.
 ///
@@ -47,8 +46,8 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static FirebaseOptions web = FirebaseOptions(
-    apiKey: dotenv.env['firebaseapikeyone']!,
+  static const FirebaseOptions web = FirebaseOptions(
+    apiKey: 'AIzaSyCToeH04_G5uR51JVGsCa7MX3tPnDt5k6k',
     appId: '1:743846062080:web:11f624dcaaf028bb9990e5',
     messagingSenderId: '743846062080',
     projectId: 'eduvista-app',
@@ -56,16 +55,16 @@ class DefaultFirebaseOptions {
     storageBucket: 'eduvista-app.appspot.com',
   );
 
-  static FirebaseOptions android = FirebaseOptions(
-    apiKey: dotenv.env['firebaseapikeytwo']!,
+  static const FirebaseOptions android = FirebaseOptions(
+    apiKey: 'AIzaSyBaNprshbO4s6pIdqfKKBgIOFf7myTcyRY',
     appId: '1:743846062080:android:a8d5cfc5fbe905f69990e5',
     messagingSenderId: '743846062080',
     projectId: 'eduvista-app',
     storageBucket: 'eduvista-app.appspot.com',
   );
 
-  static FirebaseOptions ios = FirebaseOptions(
-    apiKey: dotenv.env['firebaseapikeythree']!,
+  static const FirebaseOptions ios = FirebaseOptions(
+    apiKey: 'AIzaSyAEF3WouUT2Aq4fiG8L7fQRrq-FEjFe1wA',
     appId: '1:743846062080:ios:2349a883284c73849990e5',
     messagingSenderId: '743846062080',
     projectId: 'eduvista-app',
