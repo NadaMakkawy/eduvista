@@ -1,6 +1,5 @@
 import 'dart:ui';
 
-
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -51,21 +50,22 @@ void main() async {
     }
   }
   await dotenv.load(fileName: ".env");
-  runApp(MultiBlocProvider(
-    providers: [
-      BlocProvider(create: (ctx) => AuthCubit(CartCubit())),
-      BlocProvider(create: (ctx) => CartCubit()),
-      BlocProvider(create: (ctx) => PayCubit()),
-      BlocProvider(create: (ctx) => ImageCubit()),
-      BlocProvider(create: (ctx) => CourseBloc()),
-      BlocProvider(create: (ctx) => LectureBloc()),
-    ],
-    // child: DevicePreview(
-    //   enabled: !kReleaseMode,
-    //   builder: (context) => MyApp(),
-    // ),
-    child: const MyApp()),
-    );
+  runApp(
+    MultiBlocProvider(
+        providers: [
+          BlocProvider(create: (ctx) => AuthCubit(CartCubit())),
+          BlocProvider(create: (ctx) => CartCubit()),
+          BlocProvider(create: (ctx) => PayCubit()),
+          BlocProvider(create: (ctx) => ImageCubit()),
+          BlocProvider(create: (ctx) => CourseBloc()),
+          BlocProvider(create: (ctx) => LectureBloc()),
+        ],
+        // child: DevicePreview(
+        //   enabled: !kReleaseMode,
+        //   builder: (context) => MyApp(),
+        // ),
+        child: const MyApp()),
+  );
   // ));
 }
 
@@ -88,6 +88,7 @@ class MyApp extends StatelessWidget {
         title: 'Edu Vista',
         theme: ThemeData(
           scaffoldBackgroundColor: ColorUtility.gbScaffold,
+          appBarTheme: AppBarTheme(backgroundColor: Colors.white),
           fontFamily: ' PlusJakartaSans',
           colorScheme: ColorScheme.fromSeed(seedColor: ColorUtility.main),
           useMaterial3: true,

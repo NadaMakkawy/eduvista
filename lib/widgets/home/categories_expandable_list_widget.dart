@@ -32,114 +32,84 @@ class _CategoriesExpandableListWidgetState
     extends State<CategoriesExpandableListWidget> {
   bool _isExpanded = false;
 
-  void _toggleExpansion() {
-    setState(() {
-      _isExpanded = !_isExpanded;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: _isExpanded ? Colors.white : ColorUtility.grayLight,
+        color: _isExpanded ? Colors.white : ColorUtility.grayExtraLight,
         borderRadius: BorderRadius.circular(8),
       ),
       margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-      child: ExpansionPanelList(
-        elevation: 0,
-        expandedHeaderPadding: EdgeInsets.zero,
-        expansionCallback: (int index, bool isExpanded) {
-          _toggleExpansion();
+      child: ExpansionTile(
+        title: Text(
+          widget.categories[widget.index].name ?? 'No Name',
+          style: TextStyle(
+            color: _isExpanded ? ColorUtility.deepYellow : Colors.black,
+            fontWeight: FontWeight.w600,
+            fontSize: 16,
+          ),
+        ),
+        trailing: Icon(
+          _isExpanded
+              ? Icons.keyboard_double_arrow_down
+              : Icons.keyboard_double_arrow_right,
+          color: _isExpanded ? ColorUtility.deepYellow : Colors.black,
+        ),
+        onExpansionChanged: (bool expanded) {
+          setState(() {
+            _isExpanded = expanded;
+          });
         },
         children: [
-          ExpansionPanel(
-            headerBuilder: (BuildContext context, bool isExpanded) {
-              return Container(
-                padding: EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                  border: _isExpanded
-                      ? Border.all(color: ColorUtility.deepYellow)
-                      : null,
-                  color: _isExpanded ? Colors.white : ColorUtility.grayLight,
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          FutureBuilder(
+            future: FirebaseFirestore.instance
+                .collection('courses')
+                .where('category.id', isEqualTo: widget.category.id)
+                .get(),
+            builder: (ctx, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(child: CircularProgressIndicator());
+              }
+
+              if (snapshot.hasError) {
+                return const Center(child: Text('Error occurred'));
+              }
+
+              if (!snapshot.hasData || (snapshot.data?.docs.isEmpty ?? false)) {
+                return const Center(child: Text('No courses found'));
+              }
+
+              var courses = List<Course>.from(snapshot.data?.docs
+                      .map((e) => Course.fromJson({'id': e.id, ...e.data()}))
+                      .toList() ??
+                  []);
+              return Padding(
+                padding: const EdgeInsets.all(10),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      widget.categories[widget.index].name ?? 'No Name',
-                      style: TextStyle(
-                        color:
-                            isExpanded ? ColorUtility.deepYellow : Colors.black,
-                        fontWeight: FontWeight.w600,
-                        fontSize: 16,
-                      ),
+                    LabelWidget(
+                      name: '',
+                      onSeeAllClicked: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute<void>(
+                            builder: (BuildContext context) =>
+                                CategoryCoursesPage(
+                              category: widget.categories[widget.index],
+                            ),
+                          ),
+                        );
+                      },
                     ),
-                    Icon(
-                      color:
-                          isExpanded ? ColorUtility.deepYellow : Colors.black,
-                      isExpanded
-                          ? Icons.keyboard_double_arrow_down
-                          : Icons.keyboard_double_arrow_right,
+                    const SizedBox(height: 10),
+                    CourseCardsListWidget(
+                      courses: courses,
                     ),
                   ],
                 ),
               );
             },
-            body: FutureBuilder(
-              future: FirebaseFirestore.instance
-                  .collection('courses')
-                  .where('category.id', isEqualTo: widget.category.id)
-                  .get(),
-              builder: (ctx, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(child: CircularProgressIndicator());
-                }
-
-                if (snapshot.hasError) {
-                  return const Center(child: Text('Error occurred'));
-                }
-
-                if (!snapshot.hasData ||
-                    (snapshot.data?.docs.isEmpty ?? false)) {
-                  return const Center(child: Text('No courses found'));
-                }
-
-                var courses = List<Course>.from(snapshot.data?.docs
-                        .map((e) => Course.fromJson({'id': e.id, ...e.data()}))
-                        .toList() ??
-                    []);
-                return Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      LabelWidget(
-                        name: '',
-                        onSeeAllClicked: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute<void>(
-                              builder: (BuildContext context) =>
-                                  CategoryCoursesPage(
-                                category: widget.categories[widget.index],
-                              ),
-                            ),
-                          );
-                        },
-                      ),
-                      const SizedBox(height: 10),
-                      CourseCardsListWidget(
-                        courses: courses,
-                      ),
-                    ],
-                  ),
-                );
-              },
-            ),
-            isExpanded: _isExpanded,
-            canTapOnHeader: true,
           ),
         ],
       ),
