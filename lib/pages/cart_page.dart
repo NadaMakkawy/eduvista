@@ -1,9 +1,14 @@
+import 'package:eduvista/cubit/pay/pay_cubit.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:paymob_payment/paymob_payment.dart';
 
 import '../cubit/cart/cart_cubit.dart';
 
 import '../models/cart_item.dart';
+import 'purchased_courses_page.dart';
 
 class CartPage extends StatelessWidget {
   static const String id = 'cart';
@@ -46,9 +51,9 @@ class CartPage extends StatelessWidget {
               Text('Total: \$${total.toString()}'),
               ElevatedButton(
                 onPressed: () async {
-                  await handlePurchase(cartItems, context);
-
-                  context.read<CartCubit>().clearCart();
+                  await context
+                      .read<PayCubit>()
+                      .payment(context, total, 'EGP', cartItems);
                 },
                 child: Text('Purchase'),
               ),
@@ -59,10 +64,10 @@ class CartPage extends StatelessWidget {
     );
   }
 
-  Future<void> handlePurchase(
-      List<CartItem> cartItems, BuildContext context) async {
-    await context.read<CartCubit>().purchaseCourses(context, cartItems);
-  }
+  // Future<void> handlePurchase(
+  //     List<CartItem> cartItems, BuildContext context) async {
+  //   await context.read<CartCubit>().purchaseCourses(context, cartItems);
+  // }
 }
 // import 'package:cloud_firestore/cloud_firestore.dart';
 // import 'package:firebase_auth/firebase_auth.dart';

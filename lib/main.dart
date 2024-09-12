@@ -1,5 +1,7 @@
 import 'dart:ui';
 
+import 'package:eduvista/cubit/image/image_cubit.dart';
+import 'package:eduvista/cubit/pay/pay_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -42,13 +44,15 @@ void main() async {
     if (kDebugMode) {
       print('Failed to initialize Firebase: $e');
     }
-    await dotenv.load(fileName: ".env");
   }
+  await dotenv.load(fileName: ".env");
   runApp(
     MultiBlocProvider(
         providers: [
           BlocProvider(create: (ctx) => AuthCubit(CartCubit())),
           BlocProvider(create: (ctx) => CartCubit()),
+          BlocProvider(create: (ctx) => PayCubit()),
+          BlocProvider(create: (ctx) => ImageCubit()),
           BlocProvider(create: (ctx) => CourseBloc()),
           BlocProvider(create: (ctx) => LectureBloc()),
         ],
