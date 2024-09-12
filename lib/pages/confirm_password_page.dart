@@ -17,6 +17,7 @@ class _ConfirmPasswrdPageState extends State<ConfirmPasswrdPage> {
   late TextEditingController passwordController;
 
   late TextEditingController confirmPasswordController;
+
   @override
   void initState() {
     passwordController = TextEditingController();

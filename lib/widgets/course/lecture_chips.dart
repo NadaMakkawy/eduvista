@@ -50,7 +50,7 @@ class _LectureChipsWidgetState extends State<LectureChipsWidget> {
 class _ChipWidget extends StatelessWidget {
   final bool isSelected;
   final String label;
-  const _ChipWidget({required this.isSelected, required this.label, super.key});
+  const _ChipWidget({required this.isSelected, required this.label});
 
   @override
   Widget build(BuildContext context) {

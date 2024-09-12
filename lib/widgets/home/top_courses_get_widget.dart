@@ -1,12 +1,9 @@
-// import 'package:flutter/material.dart';
-// import 'package:flutter_bloc/flutter_bloc.dart';
-// import 'package:cloud_firestore/cloud_firestore.dart';
-// import 'package:flutter_screenutil/flutter_screenutil.dart';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:eduvista/models/course.dart';
-import 'package:eduvista/widgets/course/course_cards_List_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+import '../../models/course.dart';
+
+import '../../widgets/course/course_cards_List_widget.dart';
 
 class TopCoursesGetWidget extends StatelessWidget {
   const TopCoursesGetWidget({

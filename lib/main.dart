@@ -1,13 +1,11 @@
 import 'dart:ui';
 
-import 'package:eduvista/cubit/image/image_cubit.dart';
-import 'package:eduvista/cubit/pay/pay_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
-// import 'package:device_preview/device_preview.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:device_preview/device_preview.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../firebase_options.dart';
@@ -29,8 +27,10 @@ import '../utils/color_utilis.dart';
 import '../bloc/course/course_bloc.dart';
 import '../bloc/lecture/lecture_bloc.dart';
 
+import '../cubit/pay/pay_cubit.dart';
 import '../cubit/cart/cart_cubit.dart';
 import '../cubit/auth/auth_cubit.dart';
+import '../cubit/image/image_cubit.dart';
 
 void main() async {
   BindingBase.debugZoneErrorsAreFatal;
@@ -46,23 +46,22 @@ void main() async {
     }
   }
   await dotenv.load(fileName: ".env");
-  runApp(
-    MultiBlocProvider(
-        providers: [
-          BlocProvider(create: (ctx) => AuthCubit(CartCubit())),
-          BlocProvider(create: (ctx) => CartCubit()),
-          BlocProvider(create: (ctx) => PayCubit()),
-          BlocProvider(create: (ctx) => ImageCubit()),
-          BlocProvider(create: (ctx) => CourseBloc()),
-          BlocProvider(create: (ctx) => LectureBloc()),
-        ],
-        // child: DevicePreview(
-        //   enabled: !kReleaseMode,
-        //   builder: (context) => MyApp(),
-        // ),
-        child: const MyApp()),
-  );
-  // ));
+  runApp(MultiBlocProvider(
+    providers: [
+      BlocProvider(create: (ctx) => AuthCubit(CartCubit())),
+      BlocProvider(create: (ctx) => CartCubit()),
+      BlocProvider(create: (ctx) => PayCubit()),
+      BlocProvider(create: (ctx) => ImageCubit()),
+      BlocProvider(create: (ctx) => CourseBloc()),
+      BlocProvider(create: (ctx) => LectureBloc()),
+    ],
+    child: DevicePreview(
+      enabled: !kReleaseMode,
+      builder: (context) => MyApp(),
+    ),
+    // child: const MyApp()),
+    // );
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -75,10 +74,10 @@ class MyApp extends StatelessWidget {
       minTextAdapt: true,
       splitScreenMode: true,
       child: MaterialApp(
-        // //  ignore: deprecated_member_use
-        // useInheritedMediaQuery: true,
-        // locale: DevicePreview.locale(context),
-        // builder: DevicePreview.appBuilder,
+        //  ignore: deprecated_member_use
+        useInheritedMediaQuery: true,
+        locale: DevicePreview.locale(context),
+        builder: DevicePreview.appBuilder,
         scrollBehavior: _CustomScrollBehaviour(),
         debugShowCheckedModeBanner: false,
         title: 'Edu Vista',

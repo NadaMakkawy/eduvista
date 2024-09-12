@@ -1,6 +1,8 @@
-import 'package:eduvista/models/category_item.dart';
-import 'package:eduvista/pages/category_courses_page.dart';
 import 'package:flutter/material.dart';
+
+import '../../models/category_item.dart';
+
+import '../../pages/category_courses_page.dart';
 
 class CategoriesHeaderWidget extends StatelessWidget {
   const CategoriesHeaderWidget({
@@ -19,8 +21,7 @@ class CategoriesHeaderWidget extends StatelessWidget {
         width: 10,
       ),
       itemBuilder: (context, index) => InkWell(
-        onTap: () async {
-          // Todo add navigation to open new page has all courses related to this category
+        onTap: () {
           Navigator.of(context).push(
             MaterialPageRoute(
               builder: (context) => CategoryCoursesPage(

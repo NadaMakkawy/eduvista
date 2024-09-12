@@ -1,8 +1,9 @@
-import 'package:eduvista/widgets/course/course_cards_List_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../../models/course.dart';
+
+import '../../widgets/course/course_cards_List_widget.dart';
 
 class CoursesWidget extends StatefulWidget {
   final String? rankValue;

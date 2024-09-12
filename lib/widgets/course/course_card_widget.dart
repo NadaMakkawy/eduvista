@@ -1,11 +1,15 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:eduvista/utils/color_utilis.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+import '../../utils/color_utilis.dart';
+
+import '../../models/course.dart';
 
 import '../../cubit/cart/cart_cubit.dart';
-import '../../models/course.dart';
+
 import '../../pages/course_details_page.dart';
+
 import 'course_cards_List_widget.dart';
 
 class CourseCard extends StatelessWidget {

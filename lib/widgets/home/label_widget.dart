@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class LabelWidget extends StatelessWidget {
   final String name;
   final void Function()? onSeeAllClicked;
+
   const LabelWidget({required this.name, this.onSeeAllClicked, super.key});
 
   @override

@@ -1,5 +1,6 @@
-import 'package:eduvista/widgets/home/top_courses_get_widget.dart';
 import 'package:flutter/material.dart';
+
+import '../widgets/home/top_courses_get_widget.dart';
 
 class TopCoursesPage extends StatelessWidget {
   final String? rankValue;

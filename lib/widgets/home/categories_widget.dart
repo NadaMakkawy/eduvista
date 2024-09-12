@@ -1,55 +1,8 @@
-// import 'package:eduvista/widgets/home/categories_header_widget.dart';
-// import 'package:flutter/material.dart';
-// import 'package:cloud_firestore/cloud_firestore.dart';
-
-// import '../../models/category_item.dart';
-
-// class CategoriesWidget extends StatelessWidget {
-//   var futureCall = FirebaseFirestore.instance.collection('categories').get();
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return SizedBox(
-//       height: 40,
-//       child: FutureBuilder(
-//         future: futureCall,
-//         builder: (ctx, snapshot) {
-//           if (snapshot.connectionState == ConnectionState.waiting) {
-//             return const Center(
-//               child: CircularProgressIndicator(),
-//             );
-//           }
-
-//           if (snapshot.hasError) {
-//             return const Center(
-//               child: Text('Error occurred'),
-//             );
-//           }
-
-//           if (!snapshot.hasData || (snapshot.data?.docs.isEmpty ?? false)) {
-//             return const Center(
-//               child: Text('No categories found'),
-//             );
-//           }
-
-//           var categories = List<CategoryItem>.from(snapshot.data?.docs
-//                   .map((e) => CategoryItem.fromJson({'id': e.id, ...e.data()}))
-//                   .toList() ??
-//               []);
-
-//           return CategoriesHeaderWidget(categories: categories);
-//         },
-//       ),
-//     );
-//   }
-// }
-import 'package:eduvista/models/category_item.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../../models/category_item.dart';
 
-import '../../models/course.dart';
 import '../../pages/category_courses_page.dart';
 
 class CategoriesWidget extends StatefulWidget {
@@ -101,8 +54,7 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
               width: 10,
             ),
             itemBuilder: (context, index) => InkWell(
-              onTap: () async {
-                // Todo add navigation to open new page has all courses related to this category
+              onTap: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (context) => CategoryCoursesPage(

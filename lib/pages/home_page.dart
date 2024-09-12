@@ -1,11 +1,6 @@
-import 'package:eduvista/pages/all_categories_page.dart';
-import 'package:eduvista/widgets/account_info/image_uploader_circle.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:paymob_payment/paymob_payment.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../cubit/auth/auth_cubit.dart';
@@ -14,13 +9,15 @@ import '../models/course.dart';
 import '../models/category_item.dart';
 
 import '../pages/cart_page.dart';
-import '../pages/purchased_courses_page.dart';
 import '../pages/top_courses_page.dart';
+import '../pages/all_categories_page.dart';
+import '../pages/purchased_courses_page.dart';
 
-import '../widgets/course/clicked_courses_widget.dart';
-import '../widgets/home/categories_widget.dart';
-import '../widgets/course/courses_widget.dart';
 import '../widgets/home/label_widget.dart';
+import '../widgets/course/courses_widget.dart';
+import '../widgets/home/categories_widget.dart';
+import '../widgets/course/clicked_courses_widget.dart';
+import '../widgets/account_info/image_uploader_circle.dart';
 
 class HomePage extends StatefulWidget {
   static const String id = 'home';
@@ -42,14 +39,6 @@ class _HomePageState extends State<HomePage> {
   }
 
   List<CategoryItem>? categories;
-
-  // void _onCourseClicked(Course course) {
-  //   setState(() {
-  //     if (!_clickedCourses.contains(course)) {
-  //       _clickedCourses.add(course);
-  //     }
-  //   });
-  // }
 
   User? user = FirebaseAuth.instance.currentUser;
 
@@ -123,8 +112,7 @@ class _HomePageState extends State<HomePage> {
                 },
               ),
               CoursesWidget(
-                // rankValue: 'top rated',
-                rankValue: null,
+                rankValue: 'top rated',
               ),
               const SizedBox(
                 height: 20,

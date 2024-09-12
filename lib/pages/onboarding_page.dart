@@ -1,11 +1,11 @@
-import 'package:eduvista/utils/image_utility.dart';
 import 'package:flutter/material.dart';
 
 import '../pages/login_page.dart';
 
-import '../services/pref.service.dart';
-
 import '../utils/color_utilis.dart';
+import '../utils/image_utility.dart';
+
+import '../services/pref.service.dart';
 
 import '../widgets/auth/custom_elevated_button.dart';
 import '../widgets/onboarding/onboard_indicator.dart';
@@ -78,11 +78,11 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                 ],
               ),
             ),
-            const SizedBox(
-              height: 50,
+            SizedBox(
+              height: MediaQuery.of(context).size.height / 20,
             ),
             Expanded(
-              flex: 3,
+              flex: 2,
               child: PageView(
                 physics: const NeverScrollableScrollPhysics(),
                 controller: _pageController,
@@ -115,40 +115,42 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
             Expanded(
               child: Column(
                 children: [
-                  Row(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      OnBoardIndicator(
-                        positionIndex: 0,
-                        currentIndex: currentIndex,
-                      ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      OnBoardIndicator(
-                        positionIndex: 1,
-                        currentIndex: currentIndex,
-                      ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      OnBoardIndicator(
-                        positionIndex: 2,
-                        currentIndex: currentIndex,
-                      ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      OnBoardIndicator(
-                        positionIndex: 3,
-                        currentIndex: currentIndex,
-                      ),
-                    ],
+                  FittedBox(
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        OnBoardIndicator(
+                          positionIndex: 0,
+                          currentIndex: currentIndex,
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        OnBoardIndicator(
+                          positionIndex: 1,
+                          currentIndex: currentIndex,
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        OnBoardIndicator(
+                          positionIndex: 2,
+                          currentIndex: currentIndex,
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        OnBoardIndicator(
+                          positionIndex: 3,
+                          currentIndex: currentIndex,
+                        ),
+                      ],
+                    ),
                   ),
-                  const SizedBox(
-                    height: 80,
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height / 20,
                   ),
                   getButtons
                 ],
