@@ -1,7 +1,7 @@
-import 'package:eduvista/pages/all_categories_page.dart';
-import 'package:eduvista/pages/home_page.dart';
-import 'package:eduvista/pages/purchased_courses_page.dart';
 import 'package:flutter/material.dart';
+
+import '../pages/home_page.dart';
+import '../pages/purchased_courses_page.dart';
 
 class MainPage extends StatefulWidget {
   static const String id = 'MainPage';

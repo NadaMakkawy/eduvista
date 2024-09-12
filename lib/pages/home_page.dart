@@ -11,7 +11,6 @@ import '../models/category_item.dart';
 import '../pages/cart_page.dart';
 import '../pages/top_courses_page.dart';
 import '../pages/all_categories_page.dart';
-import '../pages/purchased_courses_page.dart';
 
 import '../widgets/home/label_widget.dart';
 import '../widgets/course/courses_widget.dart';
