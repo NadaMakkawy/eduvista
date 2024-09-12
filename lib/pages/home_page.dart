@@ -1,15 +1,12 @@
 import 'package:eduvista/pages/all_categories_page.dart';
-import 'package:eduvista/utils/color_utilis.dart';
 import 'package:eduvista/widgets/account_info/image_uploader_circle.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:paymob_payment/paymob_payment.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 
 import '../cubit/auth/auth_cubit.dart';
 
@@ -46,13 +43,13 @@ class _HomePageState extends State<HomePage> {
 
   List<CategoryItem>? categories;
 
-  void _onCourseClicked(Course course) {
-    setState(() {
-      if (!_clickedCourses.contains(course)) {
-        _clickedCourses.add(course);
-      }
-    });
-  }
+  // void _onCourseClicked(Course course) {
+  //   setState(() {
+  //     if (!_clickedCourses.contains(course)) {
+  //       _clickedCourses.add(course);
+  //     }
+  //   });
+  // }
 
   User? user = FirebaseAuth.instance.currentUser;
 
@@ -79,14 +76,16 @@ class _HomePageState extends State<HomePage> {
               },
               icon: const Icon(Icons.shopping_cart))
         ],
-        title: Row(
-          children: [
-            ImageUploaderCircle(),
-            SizedBox(width: 10),
-            Text(
-              welcomeMessage,
-            ),
-          ],
+        title: FittedBox(
+          child: Row(
+            children: [
+              ImageUploaderCircle(),
+              SizedBox(width: 10),
+              Text(
+                welcomeMessage,
+              ),
+            ],
+          ),
         ),
       ),
       body: SafeArea(
