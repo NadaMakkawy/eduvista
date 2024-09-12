@@ -9,6 +9,7 @@ import '../widgets/auth/custom_text_form_field.dart';
 
 class LoginPage extends StatefulWidget {
   static const String id = 'LoginPage';
+
   const LoginPage({super.key});
 
   @override

@@ -7,7 +7,8 @@ import '../widgets/auth/custom_elevated_button.dart';
 import '../widgets/auth/custom_text_form_field.dart';
 
 class ResetPasswordPage extends StatefulWidget {
-  static const String id = 'resetPassword';
+  static const String id = 'ResetPasswordPage';
+
   const ResetPasswordPage({super.key});
 
   @override

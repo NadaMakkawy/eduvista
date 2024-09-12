@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import '../widgets/home/top_courses_get_widget.dart';
 
 class TopCoursesPage extends StatelessWidget {
+  static const String id = 'TopCoursesPage';
+
   final String? rankValue;
 
   const TopCoursesPage({

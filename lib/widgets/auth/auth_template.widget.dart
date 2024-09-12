@@ -169,12 +169,7 @@ class _AuthTemplateWidgetState extends State<AuthTemplateWidget> {
                     CustomTextButton(
                       label: isLogin ? 'Forgot Password ?' : '',
                       onPressed: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute<void>(
-                            builder: (BuildContext context) =>
-                                const ResetPasswordPage(),
-                          ),
-                        );
+                        Navigator.pushNamed(context, ResetPasswordPage.id);
                       },
                     ),
                     Row(

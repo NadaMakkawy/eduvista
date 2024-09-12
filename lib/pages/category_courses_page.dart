@@ -5,6 +5,8 @@ import '../models/category_item.dart';
 import '../widgets/home/courses_of_category_get_widget.dart';
 
 class CategoryCoursesPage extends StatelessWidget {
+  static const String id = 'CategoryCoursesPage';
+
   final CategoryItem category;
 
   const CategoryCoursesPage({

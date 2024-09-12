@@ -7,7 +7,7 @@ import '../cubit/cart/cart_cubit.dart';
 import '../models/cart_item.dart';
 
 class CartPage extends StatelessWidget {
-  static const String id = 'cart';
+  static const String id = 'CartPage';
 
   @override
   Widget build(BuildContext context) {

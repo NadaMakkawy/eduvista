@@ -7,7 +7,8 @@ import '../widgets/auth/auth_template.widget.dart';
 import '../widgets/auth/custom_text_form_field.dart';
 
 class SignUpPage extends StatefulWidget {
-  static const String id = 'SignUpPAge';
+  static const String id = 'SignUpPage';
+
   const SignUpPage({super.key});
 
   @override

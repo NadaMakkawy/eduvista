@@ -20,7 +20,8 @@ import '../widgets/course/clicked_courses_widget.dart';
 import '../widgets/account_info/image_uploader_circle.dart';
 
 class HomePage extends StatefulWidget {
-  static const String id = 'home';
+  static const String id = 'Home';
+
   const HomePage({super.key});
 
   @override

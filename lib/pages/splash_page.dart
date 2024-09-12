@@ -11,6 +11,7 @@ import '../services/pref.service.dart';
 
 class SplashPage extends StatefulWidget {
   static String id = 'SplashPage';
+
   const SplashPage({super.key});
 
   @override

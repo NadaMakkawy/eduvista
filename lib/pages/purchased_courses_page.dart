@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class PurchasedCoursesPage extends StatelessWidget {
-  static const String id = 'purchased_courses';
+  static const String id = 'PurchasedCourses';
 
   @override
   Widget build(BuildContext context) {

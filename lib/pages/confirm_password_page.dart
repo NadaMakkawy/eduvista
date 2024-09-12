@@ -7,6 +7,8 @@ import '../widgets/auth/custom_elevated_button.dart';
 import '../widgets/auth/custom_text_form_field.dart';
 
 class ConfirmPasswrdPage extends StatefulWidget {
+  static const String id = 'ConfirmPasswrdPage';
+
   const ConfirmPasswrdPage({super.key});
 
   @override

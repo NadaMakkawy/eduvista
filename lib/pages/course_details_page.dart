@@ -15,7 +15,7 @@ import '../widgets/course/video_box_widget.dart';
 import '../widgets/course/course_options_widgets.dart';
 
 class CourseDetailsPage extends StatefulWidget {
-  static const String id = 'course_details';
+  static const String id = 'CourseDetailsPage';
   final Course course;
   const CourseDetailsPage({required this.course, super.key});
 

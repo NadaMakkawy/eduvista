@@ -151,11 +151,8 @@ class AuthCubit extends Cubit<AuthState> {
         ),
       );
       if (!context.mounted) return;
-      Navigator.of(context).push(
-        MaterialPageRoute<void>(
-          builder: (BuildContext context) => const ConfirmPasswrdPage(),
-        ),
-      );
+
+      Navigator.pushNamed(context, ConfirmPasswrdPage.id);
     } catch (e) {
       if (!context.mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
@@ -187,11 +184,7 @@ class AuthCubit extends Cubit<AuthState> {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Password updated successfully!')),
         );
-        Navigator.of(context).push(
-          MaterialPageRoute<void>(
-            builder: (BuildContext context) => const LoginPage(),
-          ),
-        );
+        Navigator.pushNamed(context, LoginPage.id);
       }
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(

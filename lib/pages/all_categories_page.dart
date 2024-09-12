@@ -7,6 +7,8 @@ import '../models/category_item.dart';
 import '../widgets/home/categories_expandable_list_widget.dart';
 
 class AllCategorisPage extends StatefulWidget {
+  static const String id = 'AllCategorisPage';
+
   @override
   _AllCategorisPageState createState() => _AllCategorisPageState();
 }
