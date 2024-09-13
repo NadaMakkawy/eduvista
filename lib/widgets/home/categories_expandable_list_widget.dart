@@ -116,6 +116,7 @@ class _CategoriesExpandableListWidgetState
                     const SizedBox(height: 10),
                     CourseCardsListWidget(
                       courses: courses,
+                      useFixedCrossAxisCount: true,
                     ),
                   ],
                 ),

@@ -41,6 +41,7 @@ class CoursesOfCategoryGetWidget extends StatelessWidget {
 
         return CourseCardsListWidget(
           courses: courses,
+          useFixedCrossAxisCount: false,
         );
       },
     );

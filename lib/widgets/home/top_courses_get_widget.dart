@@ -11,7 +11,7 @@ class TopCoursesGetWidget extends StatelessWidget {
     required this.rankValue,
   });
 
-  final String rankValue;
+  final String? rankValue;
 
   @override
   Widget build(BuildContext context) {
@@ -40,6 +40,7 @@ class TopCoursesGetWidget extends StatelessWidget {
 
         return CourseCardsListWidget(
           courses: courses,
+          useFixedCrossAxisCount: false,
         );
       },
     );

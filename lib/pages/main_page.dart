@@ -1,12 +1,11 @@
-import 'package:eduvista/pages/search_page.dart';
 import 'package:flutter/material.dart';
+import 'package:eduvista/pages/search_page.dart';
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 
 import '../widgets/account_info/image_uploader_circle.dart';
 
 import '../utils/color_utilis.dart';
 
-import '../pages/all_categories_page.dart';
 import '../pages/home_page.dart';
 import '../pages/purchased_courses_page.dart';
 

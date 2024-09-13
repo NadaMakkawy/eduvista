@@ -52,6 +52,7 @@ class _ClickedCoursesWidgetState extends State<ClickedCoursesWidget> {
 
         return CourseCardsListWidget(
           courses: widget.clickedCourses,
+          useFixedCrossAxisCount: true,
         );
       },
     );

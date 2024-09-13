@@ -1,13 +1,12 @@
+import 'package:eduvista/utils/color_utilis.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../cubit/auth/auth_cubit.dart';
-import '../cubit/image/image_cubit.dart';
 
 import '../models/course.dart';
-import '../models/category_item.dart';
 
 import '../pages/cart_page.dart';
 import '../pages/top_courses_page.dart';
@@ -17,7 +16,6 @@ import '../widgets/home/label_widget.dart';
 import '../widgets/course/courses_widget.dart';
 import '../widgets/home/categories_widget.dart';
 import '../widgets/course/clicked_courses_widget.dart';
-import '../widgets/account_info/image_uploader_circle.dart';
 
 class HomePage extends StatefulWidget {
   static const String id = 'Home';
@@ -31,7 +29,6 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   String welcomeMessage = 'Loading...';
   final List<Course> _clickedCourses = [];
-  List<CategoryItem>? categories;
   User? user = FirebaseAuth.instance.currentUser;
 
   @override
@@ -65,16 +62,29 @@ class _HomePageState extends State<HomePage> {
               icon: const Icon(Icons.shopping_cart))
         ],
         title: FittedBox(
-          child: Row(
-            children: [
-              ImageUploaderCircle(
-                onTap: () => context.read<ImageCubit>().pickAndUploadImage(),
-              ),
-              SizedBox(width: 10),
-              Text(
-                welcomeMessage,
-              ),
-            ],
+          child: RichText(
+            overflow: TextOverflow.ellipsis,
+            text: TextSpan(
+              children: [
+                TextSpan(
+                  text: welcomeMessage.split(',')[0] + ', ',
+                  style: TextStyle(
+                    fontWeight: FontWeight.w500,
+                    color: Colors.black,
+                    fontSize: 23,
+                  ),
+                ),
+                TextSpan(
+                  text:
+                      '${user?.displayName?[0].toUpperCase()}${user?.displayName?.substring(1)}',
+                  style: TextStyle(
+                    fontWeight: FontWeight.w500,
+                    color: ColorUtility.main,
+                    fontSize: 23,
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -100,50 +110,41 @@ class _HomePageState extends State<HomePage> {
                   height: 20,
                 ),
                 LabelWidget(
-                  name: 'Top Rated Courses',
+                  name: 'Students also search for',
                   onSeeAllClicked: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute<void>(
                         builder: (BuildContext context) => TopCoursesPage(
-                          rankValue: 'top rated',
+                          rankValue: null,
                         ),
                       ),
                     );
                   },
                 ),
                 CoursesWidget(
-                  rankValue: 'top rated',
+                  rankValue: null,
                 ),
                 LabelWidget(
-                  name: 'Top Seller Courses',
+                  name: 'Top Courses in UI/UX',
                   onSeeAllClicked: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute<void>(
                         builder: (BuildContext context) => TopCoursesPage(
-                          rankValue: 'top seller',
+                          rankValue: 'Top Rated UI/UX',
                         ),
                       ),
                     );
                   },
                 ),
                 CoursesWidget(
-                  rankValue: 'top seller',
+                  rankValue: 'Top Rated UI/UX',
                 ),
                 if (_clickedCourses.isNotEmpty) ...[
                   LabelWidget(
                     name: 'Interested Courses',
-                    onSeeAllClicked: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute<void>(
-                          builder: (BuildContext context) => TopCoursesPage(
-                            rankValue: null,
-                          ),
-                        ),
-                      );
-                    },
+                    onSeeAllClicked: () {},
                   ),
                   ClickedCoursesWidget(
                     clickedCourses: _clickedCourses,
@@ -167,15 +168,9 @@ class _HomePageState extends State<HomePage> {
     final userData = await userDoc.get();
     if (userData.exists) {
       final isNew = userData.data()?['isNew'] ?? false;
-      if (isNew) {
-        setState(() {
-          welcomeMessage = 'Welcome, ${user.displayName}';
-        });
-      } else {
-        setState(() {
-          welcomeMessage = 'Welcome back, ${user.displayName}';
-        });
-      }
+      setState(() {
+        welcomeMessage = isNew ? 'Welcome' : 'Welcome back';
+      });
     }
   }
 }

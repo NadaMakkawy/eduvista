@@ -57,6 +57,7 @@ class _CoursesWidgetState extends State<CoursesWidget> {
 
         return CourseCardsListWidget(
           courses: courses,
+          useFixedCrossAxisCount: true,
         );
       },
     );

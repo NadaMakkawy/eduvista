@@ -1,6 +1,8 @@
-import 'package:eduvista/models/category_item.dart';
-import 'package:eduvista/utils/color_utilis.dart';
 import 'package:flutter/material.dart';
+
+import '../../models/category_item.dart';
+
+import '../../utils/color_utilis.dart';
 
 class SearchChipsListWidget extends StatelessWidget {
   const SearchChipsListWidget({

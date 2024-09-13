@@ -15,8 +15,20 @@ class TopCoursesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('$rankValue Courses')),
-      body: TopCoursesGetWidget(rankValue: rankValue ?? 'All'),
+      appBar: AppBar(
+        title: Text(
+          '${rankValue != null ? '${rankValue}' : 'Courses'}',
+          style: TextStyle(
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+        centerTitle: true,
+        automaticallyImplyLeading: false,
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(10),
+        child: TopCoursesGetWidget(rankValue: rankValue),
+      ),
     );
   }
 }
