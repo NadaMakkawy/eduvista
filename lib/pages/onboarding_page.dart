@@ -48,6 +48,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Column(
           children: <Widget>[
@@ -59,7 +60,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                   currentIndex == 3
                       ? TextButton(
                           onPressed: () {
-                            _skipFunction(2);
+                            _skipFunction(0);
                           },
                           child: const Text(
                             'Back',

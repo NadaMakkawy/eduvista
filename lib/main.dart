@@ -142,7 +142,7 @@ class MyApp extends StatelessWidget {
               return MaterialPageRoute(builder: (context) => MainPage());
 
             default:
-              return MaterialPageRoute(builder: (context) => const MainPage());
+              return MaterialPageRoute(builder: (context) => const OnBoardingPage());
           }
         },
         initialRoute: SplashPage.id,
