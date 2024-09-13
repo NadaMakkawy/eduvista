@@ -6,10 +6,15 @@ import '../../utils/color_utilis.dart';
 import '../../cubit/image/image_cubit.dart';
 import '../../cubit/image/image_state.dart';
 
-class ImageUploaderCircle extends StatelessWidget {
+class ImageUploaderCircle extends StatefulWidget {
   Function()? onTap;
   ImageUploaderCircle({required this.onTap});
 
+  @override
+  State<ImageUploaderCircle> createState() => _ImageUploaderCircleState();
+}
+
+class _ImageUploaderCircleState extends State<ImageUploaderCircle> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -26,9 +31,10 @@ class ImageUploaderCircle extends StatelessWidget {
             _isLoading = false;
           } else if (state is ImageError) {
             _isLoading = false;
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(state.message)),
-            );
+            print(state.message);
+            // ScaffoldMessenger.of(context).showSnackBar(
+            //   SnackBar(content: Text(state.message)),
+            // );
           }
 
           return GestureDetector(
@@ -47,7 +53,7 @@ class ImageUploaderCircle extends StatelessWidget {
                       : null,
               backgroundColor: ColorUtility.deepYellow,
             ),
-            onTap: onTap,
+            onTap: widget.onTap,
           );
         },
       ),

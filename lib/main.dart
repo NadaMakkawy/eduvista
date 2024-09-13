@@ -1,16 +1,16 @@
 import 'dart:ui';
 
-import 'package:eduvista/pages/main_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-// import 'package:device_preview/device_preview.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../firebase_options.dart';
 
+import '../pages/main_page.dart';
 import '../pages/home_page.dart';
 import '../pages/cart_page.dart';
 import '../pages/login_page.dart';
@@ -52,22 +52,15 @@ void main() async {
   }
   await dotenv.load(fileName: ".env");
   runApp(
-    MultiBlocProvider(
-        providers: [
-          BlocProvider(create: (ctx) => AuthCubit(CartCubit())),
-          BlocProvider(create: (ctx) => CartCubit()),
-          BlocProvider(create: (ctx) => PayCubit()),
-          BlocProvider(create: (ctx) => ImageCubit()),
-          BlocProvider(create: (ctx) => CourseBloc()),
-          BlocProvider(create: (ctx) => LectureBloc()),
-        ],
-        // child: DevicePreview(
-        //   enabled: !kReleaseMode,
-        //   builder: (context) => MyApp(),
-        // ),
-        child: const MyApp()),
+    MultiBlocProvider(providers: [
+      BlocProvider(create: (ctx) => AuthCubit(CartCubit())),
+      BlocProvider(create: (ctx) => CartCubit()),
+      BlocProvider(create: (ctx) => PayCubit()),
+      BlocProvider(create: (ctx) => ImageCubit()),
+      BlocProvider(create: (ctx) => CourseBloc()),
+      BlocProvider(create: (ctx) => LectureBloc()),
+    ], child: const MyApp()),
   );
-  // ));
 }
 
 class MyApp extends StatelessWidget {
@@ -80,10 +73,6 @@ class MyApp extends StatelessWidget {
       minTextAdapt: true,
       splitScreenMode: true,
       child: MaterialApp(
-        // //  ignore: deprecated_member_use
-        // useInheritedMediaQuery: true,
-        // locale: DevicePreview.locale(context),
-        // builder: DevicePreview.appBuilder,
         scrollBehavior: _CustomScrollBehaviour(),
         debugShowCheckedModeBanner: false,
         title: 'Edu Vista',
@@ -140,9 +129,13 @@ class MyApp extends StatelessWidget {
                       ));
             case MainPage.id:
               return MaterialPageRoute(builder: (context) => MainPage());
-
             default:
-              return MaterialPageRoute(builder: (context) => const OnBoardingPage());
+              final currentUser = FirebaseAuth.instance.currentUser;
+              return MaterialPageRoute(
+                builder: (context) => currentUser != null
+                    ? const MainPage()
+                    : const OnBoardingPage(),
+              );
           }
         },
         initialRoute: SplashPage.id,

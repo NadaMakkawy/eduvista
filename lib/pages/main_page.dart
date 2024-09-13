@@ -42,10 +42,12 @@ class _MainPageState extends State<MainPage> {
         tabBuilder: (int index, bool isActive) {
           if (index == _iconList.length) {
             return Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(10),
                 child: ImageUploaderCircle(
                   onTap: () {
-                    Navigator.pushReplacementNamed(context, MainPage.id);
+                    Navigator.pushNamed(context, MainPage.id);
+                    // Navigator.of(context).pushReplacement(MaterialPageRoute(
+                    //     builder: (context) => _pages[_selectedIndex]));
                   },
                 ));
           }
@@ -59,8 +61,8 @@ class _MainPageState extends State<MainPage> {
         onTap: (index) => setState(() => _selectedIndex = index),
         gapLocation: GapLocation.none,
         notchSmoothness: NotchSmoothness.smoothEdge,
-        leftCornerRadius: 32,
-        rightCornerRadius: 32,
+        leftCornerRadius: 20,
+        rightCornerRadius: 20,
       ),
     );
   }
