@@ -96,12 +96,14 @@ class CourseCard extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      '\$${course.price?.toStringAsFixed(2)}',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: ColorUtility.main,
-                        fontSize: 18,
+                    FittedBox(
+                      child: Text(
+                        '\$${course.price?.toStringAsFixed(2)}',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: ColorUtility.main,
+                          fontSize: 18,
+                        ),
                       ),
                     ),
                     isPurchased
@@ -120,9 +122,9 @@ class CourseCard extends StatelessWidget {
                                   radius: 15,
                                   backgroundColor: Colors.transparent,
                                   child: Icon(
-                                    Icons.add,
+                                    Icons.add_shopping_cart_outlined,
                                     color: ColorUtility.main,
-                                    size: 20,
+                                    size: 18,
                                   ),
                                 ),
                                 onTap: () {

@@ -1,3 +1,4 @@
+import 'package:eduvista/pages/search_page.dart';
 import 'package:flutter/material.dart';
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 
@@ -28,7 +29,7 @@ class _MainPageState extends State<MainPage> {
 
   final List<Widget> _pages = [
     HomePage(),
-    AllCategorisPage(),
+    SearchPage(),
     PurchasedCoursesPage(),
   ];
 
@@ -45,9 +46,7 @@ class _MainPageState extends State<MainPage> {
                 padding: const EdgeInsets.all(10),
                 child: ImageUploaderCircle(
                   onTap: () {
-                    Navigator.pushNamed(context, MainPage.id);
-                    // Navigator.of(context).pushReplacement(MaterialPageRoute(
-                    //     builder: (context) => _pages[_selectedIndex]));
+                    Navigator.pushReplacementNamed(context, MainPage.id);
                   },
                 ));
           }
