@@ -1,3 +1,4 @@
+import 'package:eduvista/pages/pending_cart_page.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -31,7 +32,7 @@ class _AllCategorisPageState extends State<AllCategorisPage> {
           IconButton(
             icon: Icon(Icons.shopping_cart),
             onPressed: () {
-              Navigator.pushNamed(context, CartPage.id);
+              Navigator.pushNamed(context, PendingCartPage.id);
             },
           ),
         ],

@@ -24,6 +24,7 @@ import '../pages/course_details_page.dart';
 import '../pages/category_courses_page.dart';
 import '../pages/confirm_password_page.dart';
 import '../pages/purchased_courses_page.dart';
+import '../pages/pending_cart_page.dart';
 
 import '../services/pref.service.dart';
 
@@ -108,6 +109,8 @@ class MyApp extends StatelessWidget {
                       ));
             case CartPage.id:
               return MaterialPageRoute(builder: (context) => CartPage());
+            case PendingCartPage.id:
+              return MaterialPageRoute(builder: (context) => PendingCartPage());
             case PurchasedCoursesPage.id:
               return MaterialPageRoute(
                   builder: (context) => PurchasedCoursesPage());

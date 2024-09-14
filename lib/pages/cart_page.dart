@@ -1,3 +1,4 @@
+import 'package:eduvista/pages/payment_methods_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:forex_currency_conversion/forex_currency_conversion.dart';
@@ -21,8 +22,6 @@ class CartPage extends StatefulWidget {
 }
 
 class _CartPageState extends State<CartPage> {
-  bool _isExpanded = false;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,114 +71,96 @@ class _CartPageState extends State<CartPage> {
                   itemBuilder: (context, index) {
                     var course = cartItems[index].course;
 
-                    return ExpansionTile(
-                      title: InkWell(
-                        onTap: () => Navigator.pushNamed(
-                            context, CourseDetailsPage.id,
-                            arguments: course),
-                        child: FittedBox(
-                            child: Column(
-                          children: [
-                            CourseTileWidget(
-                              course: course,
-                              showExtraInfo: true,
-                            ),
-                          ],
-                        )),
-                      ),
-                      trailing: Icon(
-                        Icons.arrow_drop_down,
-                        color: _isExpanded
-                            ? ColorUtility.deepYellow
-                            : ColorUtility.main,
-                      ),
-                      onExpansionChanged: (bool expanded) {
-                        setState(() {
-                          _isExpanded = expanded;
-                        });
-                      },
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 20,
-                            vertical: 5,
+                    return InkWell(
+                      onTap: () => Navigator.pushNamed(
+                          context, CourseDetailsPage.id,
+                          arguments: course),
+                      child: FittedBox(
+                          child: Column(
+                        children: [
+                          CourseTileWidget(
+                            course: course,
+                            showExtraInfo: true,
                           ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              ElevatedButton(
-                                onPressed: () {},
-                                child: Text(
-                                  'Remove',
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                  ),
-                                ),
-                                style: ButtonStyle(
-                                  backgroundColor: WidgetStatePropertyAll(
-                                    ColorUtility.grayExtraLight,
-                                  ),
-                                  shape: WidgetStateProperty.all<
-                                      RoundedRectangleBorder>(
-                                    RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              SizedBox(width: 10),
-                              ElevatedButton(
-                                onPressed: () async {
-                                  totalInEGP = await fx.getCurrencyConverted(
-                                    sourceCurrency: "USD",
-                                    destinationCurrency: "EGP",
-                                    sourceAmount: total,
-                                  );
-
-                                  await context.read<PayCubit>().payment(
-                                      context, totalInEGP, 'EGP', cartItems);
-                                },
-                                child: Text(
-                                  'Checkout',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                  ),
-                                ),
-                                style: ButtonStyle(
-                                  backgroundColor: WidgetStatePropertyAll(
-                                    ColorUtility.deepYellow,
-                                  ),
-                                  shape: WidgetStateProperty.all<
-                                      RoundedRectangleBorder>(
-                                    RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        )
-                      ],
+                        ],
+                      )),
                     );
                   },
                 ),
               ),
-              Text('Total: \$${total.toString()}'),
-              ElevatedButton(
-                onPressed: () async {
-                  totalInEGP = await fx.getCurrencyConverted(
-                    sourceCurrency: "USD",
-                    destinationCurrency: "EGP",
-                    sourceAmount: total,
-                  );
+              Align(
+                  alignment: Alignment.bottomRight,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 30),
+                    child: Text(
+                      'Total: \$${total.toString()}',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: ColorUtility.main,
+                        fontSize: 20,
+                      ),
+                    ),
+                  )),
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 5,
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    ElevatedButton(
+                      //   onPressed: () async {
+                      //     totalInEGP = await fx.getCurrencyConverted(
+                      //       sourceCurrency: "USD",
+                      //       destinationCurrency: "EGP",
+                      //       sourceAmount: total,
+                      //     );
 
-                  await context
-                      .read<PayCubit>()
-                      .payment(context, totalInEGP, 'EGP', cartItems);
-                },
-                child: Text('Purchase'),
-              ),
+                      //     await context
+                      //         .read<PayCubit>()
+                      //         .payment(context, totalInEGP, 'EGP', cartItems);
+                      //   },
+
+                      onPressed: () => Navigator.push<void>(
+                        context,
+                        MaterialPageRoute<void>(
+                          builder: (BuildContext context) => PaymentMethodsPage(
+                            onPressed: () async {
+                              totalInEGP = await fx.getCurrencyConverted(
+                                sourceCurrency: "USD",
+                                destinationCurrency: "EGP",
+                                sourceAmount: total,
+                              );
+
+                              await context.read<PayCubit>().payment(
+                                  context, totalInEGP, 'EGP', cartItems);
+                            },
+                          ),
+                        ),
+                      ),
+
+                      child: Text(
+                        'Checkout',
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+
+                      style: ButtonStyle(
+                        backgroundColor: WidgetStatePropertyAll(
+                          ColorUtility.deepYellow,
+                        ),
+                        shape: WidgetStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              )
             ],
           );
         },

@@ -1,3 +1,4 @@
+import 'package:eduvista/pages/pending_cart_page.dart';
 import 'package:flutter/material.dart';
 
 import '../widgets/home/search_chips_list_widget.dart';
@@ -13,7 +14,7 @@ class SearchPage extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.shopping_cart),
             onPressed: () {
-              Navigator.pushNamed(context, CartPage.id);
+              Navigator.pushNamed(context, PendingCartPage.id);
             },
           ),
         ],
