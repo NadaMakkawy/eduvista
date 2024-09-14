@@ -1,3 +1,4 @@
+import 'package:eduvista/widgets/course/rating_display_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -69,7 +70,7 @@ class CourseCard extends StatelessWidget {
                             TextStyle(fontSize: 14, color: ColorUtility.gray),
                       ),
                       SizedBox(width: 5),
-                      _RatingDisplay(rating: widget.courses[index].rating!),
+                      RatingDisplay(rating: widget.courses[index].rating!),
                     ],
                   ),
                   SizedBox(height: 4),
@@ -145,43 +146,6 @@ class CourseCard extends StatelessWidget {
           )
         ],
       ),
-    );
-  }
-}
-
-class _RatingDisplay extends StatelessWidget {
-  final double rating;
-
-  _RatingDisplay({required this.rating});
-
-  @override
-  Widget build(BuildContext context) {
-    int fullStars = rating.floor();
-    bool hasHalfStar = rating % 1 >= 0.5;
-
-    return Row(
-      children: [
-        ...List.generate(
-            fullStars,
-            (index) => Icon(
-                  Icons.star,
-                  color: ColorUtility.main,
-                  size: 16,
-                )),
-        if (hasHalfStar)
-          Icon(
-            Icons.star_half,
-            color: ColorUtility.main,
-            size: 16,
-          ),
-        ...List.generate(
-            5 - fullStars - (hasHalfStar ? 1 : 0),
-            (index) => Icon(
-                  Icons.star_border,
-                  color: ColorUtility.main,
-                  size: 16,
-                )),
-      ],
     );
   }
 }

@@ -5,6 +5,8 @@ import '../../models/category_item.dart';
 
 import '../../pages/category_courses_page.dart';
 
+import '../../utils/image_utility.dart';
+
 class CategoriesWidget extends StatefulWidget {
   const CategoriesWidget({
     super.key,
@@ -37,9 +39,7 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
           }
 
           if (!snapshot.hasData || (snapshot.data?.docs.isEmpty ?? false)) {
-            return const Center(
-              child: Text('No categories found'),
-            );
+            return Center(child: Image.asset(IntroImageUtils.error));
           }
 
           var categories = List<CategoryItem>.from(snapshot.data?.docs

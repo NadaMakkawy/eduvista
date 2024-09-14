@@ -4,6 +4,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../models/course.dart';
 import '../../models/category_item.dart';
 
+import '../../utils/image_utility.dart';
+
 import '../../widgets/course/course_cards_List_widget.dart';
 
 class CoursesOfCategoryGetWidget extends StatelessWidget {
@@ -31,7 +33,7 @@ class CoursesOfCategoryGetWidget extends StatelessWidget {
         }
 
         if (!snapshot.hasData || (snapshot.data?.docs.isEmpty ?? false)) {
-          return const Center(child: Text('No courses found'));
+          return Center(child: Image.asset(IntroImageUtils.error));
         }
 
         var courses = List<Course>.from(snapshot.data?.docs

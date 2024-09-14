@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../../bloc/course/course_bloc.dart';
 
@@ -27,8 +26,6 @@ class CourseOptionsWidgets extends StatefulWidget {
 }
 
 class _CourseOptionsWidgetsState extends State<CourseOptionsWidgets> {
-  late Future<QuerySnapshot<Map<String, dynamic>>> futureCall;
-
   @override
   void initState() {
     init();
@@ -36,6 +33,7 @@ class _CourseOptionsWidgetsState extends State<CourseOptionsWidgets> {
   }
 
   List<Lecture>? lectures;
+
   bool isLoading = false;
   void init() async {
     setState(() {

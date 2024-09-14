@@ -1,45 +1,61 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+
+import '../models/course.dart';
+
+import '../utils/image_utility.dart';
+
+import '../widgets/home/course_filter_chips_widget.dart';
+import '../widgets/course/course_tile_list_widget.dart';
+
+import 'cart_page.dart';
 
 class PurchasedCoursesPage extends StatelessWidget {
   static const String id = 'PurchasedCourses';
 
   @override
   Widget build(BuildContext context) {
-    final user = FirebaseAuth.instance.currentUser;
     return Scaffold(
-      appBar: AppBar(title: Text('Purchased Courses')),
-      body: StreamBuilder<QuerySnapshot>(
-        stream: FirebaseFirestore.instance
-            .collection('users')
-            .doc(user!.uid)
-            .collection('purchased_courses')
-            .snapshots(),
-        builder: (context, snapshot) {
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text(
+          'Courses',
+          style: TextStyle(fontWeight: FontWeight.w500),
+        ),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.shopping_cart),
+            onPressed: () {
+              Navigator.pushNamed(context, CartPage.id);
+            },
+          ),
+        ],
+      ),
+      body: FutureBuilder(
+        future: FirebaseFirestore.instance.collection('courses').get(),
+        builder: (ctx, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           }
 
           if (snapshot.hasError) {
-            return Center(child: Text('Error: ${snapshot.error}'));
+            return const Center(child: Text('Error occurred'));
           }
 
-          var courses = snapshot.data!.docs;
-
-          if (courses.isEmpty) {
-            return Center(child: Text('No purchased courses.'));
+          if (!snapshot.hasData || (snapshot.data?.docs.isEmpty ?? false)) {
+            return Center(child: Image.asset(IntroImageUtils.error));
           }
 
-          return ListView.builder(
-            itemCount: courses.length,
-            itemBuilder: (context, index) {
-              var courseData = courses[index].data() as Map<String, dynamic>;
-              return ListTile(
-                title: Text(courseData['title']),
-                subtitle: Text('\$${courseData['price']}'),
-              );
-            },
+          var courses = List<Course>.from(snapshot.data?.docs
+                  .map((e) => Course.fromJson({'id': e.id, ...e.data()}))
+                  .toList() ??
+              []);
+
+          return Column(
+            children: [
+              CourseFilterChipsWidget(),
+              CourseTileListWidget(courses: courses),
+            ],
           );
         },
       ),

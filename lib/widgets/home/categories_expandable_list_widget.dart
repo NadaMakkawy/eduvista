@@ -87,13 +87,14 @@ class _CategoriesExpandableListWidgetState
               }
 
               if (!snapshot.hasData || (snapshot.data?.docs.isEmpty ?? false)) {
-                return const Center(child: Text('No courses found'));
+                return Center(child: Text('No Courses Found'));
               }
 
               var courses = List<Course>.from(snapshot.data?.docs
                       .map((e) => Course.fromJson({'id': e.id, ...e.data()}))
                       .toList() ??
                   []);
+
               return Padding(
                 padding: const EdgeInsets.all(10),
                 child: Column(
