@@ -93,7 +93,19 @@ class AuthCubit extends Cubit<AuthState> {
       );
       if (credentials.user != null) {
         await updateUserStatus(credentials.user!);
+
         await credentials.user!.updateDisplayName(nameController.text);
+
+        await credentials.user!.updateProfile(displayName: nameController.text);
+
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(credentials.user!.uid)
+            .set({
+          'displayName': nameController.text,
+          'email': emailController.text,
+          'isNew': true,
+        });
 
         if (!context.mounted) return;
 
@@ -225,10 +237,13 @@ class AuthCubit extends Cubit<AuthState> {
     final userData = await userDoc.get();
     if (!userData.exists) {
       await userDoc.set({
+        'displayName': user.displayName ?? 'No Name',
+        'email': user.email ?? 'No Email',
         'isNew': true,
       });
     } else {
       await userDoc.update({
+        'displayName': user.displayName ?? 'No Name',
         'isNew': false,
       });
     }

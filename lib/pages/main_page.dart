@@ -22,15 +22,15 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   final List<IconData> _iconList = [
     Icons.home,
-    Icons.search,
     Icons.import_contacts_outlined,
+    Icons.search,
   ];
   int _selectedIndex = 0;
 
   final List<Widget> _pages = [
     HomePage(),
-    SearchPage(),
     PurchasedCoursesPage(),
+    SearchPage(),
     ProfilePage(),
   ];
 
