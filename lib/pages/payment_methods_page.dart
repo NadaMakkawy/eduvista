@@ -15,6 +15,7 @@ class PaymentMethodsPage extends StatefulWidget {
 
 class _PaymentMethodsPageState extends State<PaymentMethodsPage> {
   String? selectedPaymentMethod;
+  bool _isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -85,25 +86,41 @@ class _PaymentMethodsPageState extends State<PaymentMethodsPage> {
                 bottom: 35,
               ),
               child: ElevatedButton(
-                onPressed:
-                    selectedPaymentMethod != null ? widget.onPressed : null,
-                child: Text(
-                  'Checkout',
-                  style: TextStyle(
-                    color: Colors.white,
+                onPressed: selectedPaymentMethod != null && !_isLoading
+                    ? () async {
+                        setState(() {
+                          _isLoading = true;
+                        });
+
+                        if (widget.onPressed != null) {
+                          widget.onPressed!();
+                        }
+
+                        await Future.delayed(Duration(seconds: 2));
+
+                        setState(() {
+                          _isLoading = false;
+                        });
+                      }
+                    : null,
+                child: _isLoading
+                    ? CircularProgressIndicator(
+                        color: Colors.white,
+                      )
+                    : Text(
+                        'Checkout',
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: selectedPaymentMethod != null && !_isLoading
+                      ? ColorUtility.deepYellow
+                      : ColorUtility.grayLight,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
                   ),
-                ),
-                style: ButtonStyle(
-                  backgroundColor: selectedPaymentMethod != null
-                      ? WidgetStatePropertyAll(ColorUtility.deepYellow)
-                      : WidgetStatePropertyAll(ColorUtility.grayLight),
-                  shape: WidgetStatePropertyAll<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
-                  minimumSize:
-                      WidgetStatePropertyAll(Size(double.infinity, 50)),
+                  minimumSize: Size(double.infinity, 50),
                 ),
               ),
             ),

@@ -1,9 +1,8 @@
-import 'package:eduvista/pages/pending_cart_page.dart';
 import 'package:flutter/material.dart';
 
 import '../widgets/home/search_chips_list_widget.dart';
 
-import '../pages/cart_page.dart';
+import '../pages/pending_cart_page.dart';
 
 class SearchPage extends StatelessWidget {
   @override

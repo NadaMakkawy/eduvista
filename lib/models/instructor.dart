@@ -4,6 +4,9 @@ class Instructor {
   String? graduation_from;
   int? years_of_experience;
 
+  Instructor(
+      {this.id, this.name, this.graduation_from, this.years_of_experience});
+
   Instructor.fromJson(Map<String, dynamic> data) {
     id = data['id'];
     name = data['name'];

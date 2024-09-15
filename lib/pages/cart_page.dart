@@ -51,7 +51,7 @@ class _CartPageState extends State<CartPage> {
               child: Text(
                 'Your cart is empty',
                 style: TextStyle(
-                  fontSize: 20,
+                  fontSize: 16,
                 ),
               ),
             );
@@ -110,18 +110,6 @@ class _CartPageState extends State<CartPage> {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     ElevatedButton(
-                      //   onPressed: () async {
-                      //     totalInEGP = await fx.getCurrencyConverted(
-                      //       sourceCurrency: "USD",
-                      //       destinationCurrency: "EGP",
-                      //       sourceAmount: total,
-                      //     );
-
-                      //     await context
-                      //         .read<PayCubit>()
-                      //         .payment(context, totalInEGP, 'EGP', cartItems);
-                      //   },
-
                       onPressed: () => Navigator.push<void>(
                         context,
                         MaterialPageRoute<void>(
@@ -139,22 +127,16 @@ class _CartPageState extends State<CartPage> {
                           ),
                         ),
                       ),
-
                       child: Text(
                         'Checkout',
                         style: TextStyle(
                           color: Colors.white,
                         ),
                       ),
-
-                      style: ButtonStyle(
-                        backgroundColor: WidgetStatePropertyAll(
-                          ColorUtility.deepYellow,
-                        ),
-                        shape: WidgetStateProperty.all<RoundedRectangleBorder>(
-                          RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: ColorUtility.deepYellow,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
                         ),
                       ),
                     ),

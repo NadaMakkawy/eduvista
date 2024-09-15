@@ -19,26 +19,33 @@ class Course {
   bool? is_clicked;
 
   Course.fromJson(Map<String, dynamic> data) {
-    id = data['id'];
-    title = data['title'];
-    image = data['image'];
+    id = data['id'] as String?;
+    title = data['title'] as String?;
+    image = data['image'] as String?;
     category = data['category'] != null
-        ? CategoryItem.fromJson(data['category'])
+        ? CategoryItem.fromJson(data['category'] as Map<String, dynamic>)
         : null;
-    currency = data['currency'];
-    rank = data['rank'];
-    has_certificate = data['has_certificate'];
-    is_clicked = data['is_clicked'];
-    instructor = data['instructor'] != null
-        ? Instructor.fromJson(data['instructor'])
-        : null;
+    currency = data['currency'] as String?;
+    rank = data['rank'] as String?;
+    has_certificate = data['has_certificate'] as bool?;
+    is_clicked = data['is_clicked'] as bool?;
+
+    if (data['instructor'] is Map<String, dynamic>) {
+      instructor = Instructor.fromJson(data['instructor']);
+    } else if (data['instructor'] is String) {
+      instructor = Instructor(name: data['instructor']);
+    } else {
+      instructor = null;
+    }
+
     price = data['price'] is int
         ? (data['price'] as int).toDouble()
-        : data['price'];
+        : data['price'] as double?;
     rating = data['rating'] is int
         ? (data['rating'] as int).toDouble()
-        : data['rating'];
-    total_hours = data['total_hours'];
+        : data['rating'] as double?;
+
+    total_hours = data['total_hours'] as int?;
     created_date = data['created_date'] != null
         ? (data['created_date'] as Timestamp).toDate()
         : null;

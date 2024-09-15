@@ -1,9 +1,6 @@
-import 'package:eduvista/pages/cart_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:forex_currency_conversion/forex_currency_conversion.dart';
 
-import '../cubit/pay/pay_cubit.dart';
 import '../cubit/cart/cart_cubit.dart';
 
 import '../models/cart_item.dart';
@@ -12,7 +9,8 @@ import '../utils/color_utilis.dart';
 
 import '../widgets/course/course_tile_widget.dart';
 
-import 'course_details_page.dart';
+import '../pages/cart_page.dart';
+import '../pages/course_details_page.dart';
 
 class PendingCartPage extends StatefulWidget {
   static const String id = 'PendingCartPage';
@@ -53,14 +51,11 @@ class _PendingCartPageState extends State<PendingCartPage> {
               child: Text(
                 'Your cart is empty',
                 style: TextStyle(
-                  fontSize: 20,
+                  fontSize: 16,
                 ),
               ),
             );
           }
-
-          final fx = Forex();
-          double totalInEGP = 0.0;
 
           double total = cartItems.fold(
               0, (sum, item) => sum + item.course.price! * item.quantity);
@@ -79,14 +74,15 @@ class _PendingCartPageState extends State<PendingCartPage> {
                             context, CourseDetailsPage.id,
                             arguments: course),
                         child: FittedBox(
-                            child: Column(
-                          children: [
-                            CourseTileWidget(
-                              course: course,
-                              showExtraInfo: true,
-                            ),
-                          ],
-                        )),
+                          child: Column(
+                            children: [
+                              CourseTileWidget(
+                                course: course,
+                                showExtraInfo: true,
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
                       trailing: Icon(
                         Icons.arrow_drop_down,
@@ -120,15 +116,10 @@ class _PendingCartPageState extends State<PendingCartPage> {
                                     color: Colors.black,
                                   ),
                                 ),
-                                style: ButtonStyle(
-                                  backgroundColor: WidgetStatePropertyAll(
-                                    ColorUtility.grayExtraLight,
-                                  ),
-                                  shape: WidgetStateProperty.all<
-                                      RoundedRectangleBorder>(
-                                    RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: ColorUtility.grayExtraLight,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
                                   ),
                                 ),
                               ),
@@ -143,15 +134,10 @@ class _PendingCartPageState extends State<PendingCartPage> {
                                     color: Colors.white,
                                   ),
                                 ),
-                                style: ButtonStyle(
-                                  backgroundColor: WidgetStatePropertyAll(
-                                    ColorUtility.deepYellow,
-                                  ),
-                                  shape: WidgetStateProperty.all<
-                                      RoundedRectangleBorder>(
-                                    RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: ColorUtility.deepYellow,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
                                   ),
                                 ),
                               ),
@@ -195,14 +181,10 @@ class _PendingCartPageState extends State<PendingCartPage> {
                           color: Colors.black,
                         ),
                       ),
-                      style: ButtonStyle(
-                        backgroundColor: WidgetStatePropertyAll(
-                          ColorUtility.grayExtraLight,
-                        ),
-                        shape: WidgetStateProperty.all<RoundedRectangleBorder>(
-                          RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: ColorUtility.grayExtraLight,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
                         ),
                       ),
                     ),
@@ -217,14 +199,10 @@ class _PendingCartPageState extends State<PendingCartPage> {
                           color: Colors.white,
                         ),
                       ),
-                      style: ButtonStyle(
-                        backgroundColor: WidgetStatePropertyAll(
-                          ColorUtility.deepYellow,
-                        ),
-                        shape: WidgetStateProperty.all<RoundedRectangleBorder>(
-                          RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: ColorUtility.deepYellow,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
                         ),
                       ),
                     ),

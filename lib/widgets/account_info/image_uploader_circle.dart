@@ -2,13 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../utils/color_utilis.dart';
 import '../../cubit/image/image_cubit.dart';
 import '../../cubit/image/image_state.dart';
 
 class ImageUploaderCircle extends StatefulWidget {
+  final double radius;
   Function()? onTap;
-  ImageUploaderCircle({required this.onTap});
+
+  ImageUploaderCircle({
+    required this.radius,
+    required this.onTap,
+  });
 
   @override
   State<ImageUploaderCircle> createState() => _ImageUploaderCircleState();
@@ -32,14 +36,11 @@ class _ImageUploaderCircleState extends State<ImageUploaderCircle> {
           } else if (state is ImageError) {
             _isLoading = false;
             print(state.message);
-            // ScaffoldMessenger.of(context).showSnackBar(
-            //   SnackBar(content: Text(state.message)),
-            // );
           }
 
           return GestureDetector(
             child: CircleAvatar(
-              radius: 20,
+              radius: widget.radius,
               backgroundImage:
                   _imageData != null ? MemoryImage(_imageData) : null,
               child: _isLoading
@@ -49,9 +50,9 @@ class _ImageUploaderCircleState extends State<ImageUploaderCircle> {
                       child: CircularProgressIndicator(),
                     )
                   : _imageData == null
-                      ? FittedBox(child: Icon(Icons.person, size: 30))
+                      ? FittedBox(child: Icon(Icons.person, size: 50))
                       : null,
-              backgroundColor: ColorUtility.deepYellow,
+              backgroundColor: Colors.transparent,
             ),
             onTap: widget.onTap,
           );

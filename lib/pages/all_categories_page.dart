@@ -1,4 +1,3 @@
-import 'package:eduvista/pages/pending_cart_page.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -9,9 +8,9 @@ import '../utils/color_utilis.dart';
 
 import '../utils/image_utility.dart';
 
-import '../widgets/home/categories_expandable_list_widget.dart';
+import '../pages/pending_cart_page.dart';
 
-import 'cart_page.dart';
+import '../widgets/home/categories_expandable_list_widget.dart';
 
 class AllCategorisPage extends StatefulWidget {
   static const String id = 'AllCategorisPage';

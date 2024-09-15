@@ -25,6 +25,7 @@ import '../pages/category_courses_page.dart';
 import '../pages/confirm_password_page.dart';
 import '../pages/purchased_courses_page.dart';
 import '../pages/pending_cart_page.dart';
+import '../pages/profile_page.dart';
 
 import '../services/pref.service.dart';
 
@@ -130,6 +131,8 @@ class MyApp extends StatelessWidget {
                   builder: (context) => TopCoursesPage(
                         rankValue: data,
                       ));
+            case ProfilePage.id:
+              return MaterialPageRoute(builder: (context) => ProfilePage());
             case MainPage.id:
               return MaterialPageRoute(builder: (context) => MainPage());
             default:

@@ -1,3 +1,6 @@
+import 'package:eduvista/options/course/certificate_option.dart';
+import 'package:eduvista/options/course/more_option.dart';
+import 'package:eduvista/utils/color_utilis.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -75,10 +78,29 @@ class _CourseOptionsWidgetsState extends State<CourseOptionsWidgets> {
         return const SizedBox.shrink();
 
       case CourseOptions.Certificate:
-        return const SizedBox.shrink();
+        // showCertificate(context);
+        return widget.course.has_certificate == true
+            ? Center(
+                child: ElevatedButton(
+                  onPressed: () {
+                    showCertificate(context, widget.course.title!);
+                  },
+                  child: Text('Show Certificate'),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: ColorUtility.deepYellow,
+                    foregroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                ),
+              )
+            : Center(
+                child: Text('This Course doesn\'t have a Certificate'),
+              );
 
       case CourseOptions.More:
-        return const SizedBox.shrink();
+        return MoreOption();
       default:
         return Text('Invalid option ${widget.courseOption.name}');
     }

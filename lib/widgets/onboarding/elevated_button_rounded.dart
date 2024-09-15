@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class ElevatedButtonRounded extends StatelessWidget {
   void Function()? onPressed;
-  WidgetStateProperty<Color?>? backgroundColor;
+  Color? backgroundColor;
   Widget? icon;
 
   ElevatedButtonRounded(
@@ -14,15 +14,11 @@ class ElevatedButtonRounded extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      style: ButtonStyle(
-        fixedSize: WidgetStateProperty.all(const Size(65, 65)),
-        foregroundColor: WidgetStateProperty.all<Color>(
-          Colors.white,
-        ),
-        padding: WidgetStateProperty.all<EdgeInsets>(
-          const EdgeInsets.all(15),
-        ),
-        shape: WidgetStateProperty.all<CircleBorder>(const CircleBorder()),
+      style: ElevatedButton.styleFrom(
+        fixedSize: const Size(65, 65),
+        foregroundColor: Colors.white,
+        padding: const EdgeInsets.all(15),
+        shape: const CircleBorder(),
         backgroundColor: backgroundColor,
       ),
       onPressed: onPressed,

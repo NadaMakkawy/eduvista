@@ -180,9 +180,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                         Icons.arrow_back,
                         size: 30,
                       ),
-                      backgroundColor: WidgetStateProperty.all<Color>(
-                        ColorUtility.grayLight,
-                      ),
+                      backgroundColor: ColorUtility.grayLight,
                     ),
               currentIndex == 3
                   ? const SizedBox.shrink()
@@ -194,9 +192,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                         Icons.arrow_forward,
                         size: 30,
                       ),
-                      backgroundColor: WidgetStateProperty.all<Color>(
-                        ColorUtility.deepYellow,
-                      ),
+                      backgroundColor: ColorUtility.deepYellow,
                     ),
             ],
           ),

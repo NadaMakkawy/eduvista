@@ -8,4 +8,5 @@ class ColorUtility {
   static const main = Color(0xff477B72);
   static const mediumlBlack = Color(0xff1D1B20);
   static const gbScaffold = Color(0xffFCFCFC);
+  static const deepBlue = Color.fromARGB(255, 9, 59, 84);
 }

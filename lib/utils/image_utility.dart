@@ -9,7 +9,8 @@ class IntroImageUtils {
 }
 
 class LogosImagesUtils {
-  static const String google = '${path}google.png';
   static const String path = 'assets/images/logos/';
+  static const String google = '${path}google.png';
   static const String facebook = '${path}facebook.png';
+  static const String certificateCircle = '${path}certificatecircle.png';
 }

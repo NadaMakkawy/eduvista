@@ -8,6 +8,7 @@ import '../utils/color_utilis.dart';
 
 import '../pages/home_page.dart';
 import '../pages/purchased_courses_page.dart';
+import '../pages/profile_page.dart';
 
 class MainPage extends StatefulWidget {
   static const String id = 'MainPage';
@@ -30,6 +31,7 @@ class _MainPageState extends State<MainPage> {
     HomePage(),
     SearchPage(),
     PurchasedCoursesPage(),
+    ProfilePage(),
   ];
 
   @override
@@ -44,8 +46,11 @@ class _MainPageState extends State<MainPage> {
             return Padding(
                 padding: const EdgeInsets.all(10),
                 child: ImageUploaderCircle(
+                  radius: 10,
                   onTap: () {
-                    Navigator.pushReplacementNamed(context, MainPage.id);
+                    setState(
+                      () => _selectedIndex = index,
+                    );
                   },
                 ));
           }

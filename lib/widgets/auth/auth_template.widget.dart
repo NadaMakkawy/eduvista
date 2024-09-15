@@ -166,11 +166,21 @@ class _AuthTemplateWidgetState extends State<AuthTemplateWidget> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     widget.body,
-                    CustomTextButton(
-                      label: isLogin ? 'Forgot Password ?' : '',
-                      onPressed: () {
-                        Navigator.pushNamed(context, ResetPasswordPage.id);
-                      },
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 25, vertical: 10),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          CustomTextButton(
+                            label: isLogin ? 'Forgot Password ?' : '',
+                            onPressed: () {
+                              Navigator.pushNamed(
+                                  context, ResetPasswordPage.id);
+                            },
+                          ),
+                        ],
+                      ),
                     ),
                     Row(
                       children: [

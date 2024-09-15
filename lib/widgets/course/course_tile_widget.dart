@@ -48,7 +48,9 @@ class CourseTileWidget extends StatelessWidget {
                   children: [
                     Icon(Icons.person_outline_outlined),
                     SizedBox(width: 8),
-                    Text(course.instructor?.name ?? 'No Name'),
+                    Text(
+                      course.instructor?.name ?? 'No Instructor',
+                    ),
                   ],
                 ),
                 if (showExtraInfo) ...[

@@ -1,14 +1,10 @@
-import 'package:eduvista/pages/pending_cart_page.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import '../cubit/auth/auth_cubit.dart';
-
 import '../utils/color_utilis.dart';
 
-import '../pages/cart_page.dart';
+import '../pages/pending_cart_page.dart';
 import '../pages/top_courses_page.dart';
 import '../pages/all_categories_page.dart';
 
@@ -43,12 +39,6 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         actions: [
-          IconButton(
-            icon: const Icon(Icons.logout),
-            onPressed: () {
-              context.read<AuthCubit>().logout(context: context);
-            },
-          ),
           IconButton(
               onPressed: () {
                 Navigator.push(
