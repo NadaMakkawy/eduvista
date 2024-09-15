@@ -1,12 +1,13 @@
 import 'dart:convert';
 
-import 'package:eduvista/widgets/course/lectures_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../models/lecture.dart';
 
 import '../../utils/color_utilis.dart';
+
+import '../../widgets/course/lectures_widget.dart';
 
 class DownloadOption extends StatefulWidget {
   final void Function(Lecture) onLectureChosen;
@@ -88,20 +89,6 @@ class _DownloadOptionState extends State<DownloadOption> {
     );
   }
 
-  // Future<List<Lecture>> _getSavedLectures() async {
-  //   final prefs = await SharedPreferences.getInstance();
-  //   List<Lecture> lectures = [];
-
-  //   for (int i = 0; i < 10; i++) {
-  //     String? lectureJson = prefs.getString('savedLecture_$i');
-  //     if (lectureJson != null) {
-  //       Map<String, dynamic> json = jsonDecode(lectureJson);
-  //       lectures.add(Lecture.fromJson(json));
-  //     }
-  //   }
-
-  //   return lectures;
-  // }
   Future<List<Lecture>> _getSavedLectures() async {
     final prefs = await SharedPreferences.getInstance();
     List<Lecture> lectures = [];

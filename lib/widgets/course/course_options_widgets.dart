@@ -1,12 +1,9 @@
-import 'dart:convert';
-
-import 'package:eduvista/options/course/download_option.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../bloc/course/course_bloc.dart';
 
+import '../../options/course/download_option.dart';
 import '../../options/course/more_option.dart';
 import '../../options/course/lectures_option.dart';
 import '../../options/course/certificate_option.dart';
