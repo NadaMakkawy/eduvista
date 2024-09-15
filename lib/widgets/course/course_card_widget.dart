@@ -1,4 +1,5 @@
 import 'package:eduvista/widgets/course/rating_display_widget.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -35,13 +36,10 @@ class CourseCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () async {
-        await FirebaseFirestore.instance
-            .collection('courses')
-            .doc(course.id)
-            .update({'is_clicked': true});
-
         Navigator.pushNamed(context, CourseDetailsPage.id,
             arguments: widget.courses[index]);
+
+        await clickedCourses(context, widget.courses[index]);
       },
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -146,6 +144,26 @@ class CourseCard extends StatelessWidget {
           )
         ],
       ),
+    );
+  }
+
+  Future<void> clickedCourses(BuildContext context, Course course) async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null) return;
+
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(user.uid)
+        .collection('clicked_courses')
+        .doc(course.id)
+        .set(
+      {
+        'course_id': course.id,
+        'title': course.title,
+        'price': course.price,
+        'image': course.image,
+        'instructor': course.instructor?.name,
+      },
     );
   }
 }

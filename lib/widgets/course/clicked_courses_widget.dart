@@ -8,9 +8,7 @@ import '../../utils/image_utility.dart';
 import 'course_cards_List_widget.dart';
 
 class ClickedCoursesWidget extends StatefulWidget {
-  final List<Course> clickedCourses;
-
-  ClickedCoursesWidget({required this.clickedCourses, super.key});
+  ClickedCoursesWidget({super.key});
 
   @override
   State<ClickedCoursesWidget> createState() => _ClickedCoursesWidgetState();
@@ -22,10 +20,7 @@ class _ClickedCoursesWidgetState extends State<ClickedCoursesWidget> {
 
   @override
   void initState() {
-    futureCall = FirebaseFirestore.instance
-        .collection('courses')
-        .orderBy('created_date', descending: true)
-        .get();
+    futureCall = FirebaseFirestore.instance.collection('clicked_courses').get();
     super.initState();
   }
 
@@ -47,11 +42,16 @@ class _ClickedCoursesWidgetState extends State<ClickedCoursesWidget> {
         }
 
         if (!snapshot.hasData || (snapshot.data?.docs.isEmpty ?? false)) {
-          return Center(child: Image.asset(IntroImageUtils.error));
+          return Center(child: Text('No Courses available'));
         }
 
+        var courses = List<Course>.from(snapshot.data?.docs
+                .map((e) => Course.fromJson({'id': e.id, ...e.data()}))
+                .toList() ??
+            []);
+
         return CourseCardsListWidget(
-          courses: widget.clickedCourses,
+          courses: courses,
           useFixedCrossAxisCount: true,
         );
       },

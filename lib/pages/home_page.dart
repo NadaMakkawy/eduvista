@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import '../models/course.dart';
 import '../utils/color_utilis.dart';
 
 import '../pages/pending_cart_page.dart';
 import '../pages/top_courses_page.dart';
 import '../pages/all_categories_page.dart';
 
+import '../widgets/course/clicked_courses_widget.dart';
 import '../widgets/home/label_widget.dart';
 import '../widgets/course/courses_widget.dart';
 import '../widgets/home/categories_widget.dart';
@@ -108,6 +110,12 @@ class _HomePageState extends State<HomePage> {
                 //   ),
                 // ],
                 LabelWidget(
+                  name: 'Interested Courses',
+                  onSeeAllClicked: () {},
+                ),
+                ClickedCoursesWidget(),
+
+                LabelWidget(
                   name: 'Students also search for',
                   onSeeAllClicked: () {
                     Navigator.push(
@@ -177,5 +185,19 @@ class _HomePageState extends State<HomePage> {
         welcomeMessage = isNew ? 'Welcome' : 'Welcome back';
       });
     }
+  }
+
+  Future<bool> isClicked(String courseId) async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null) return false;
+
+    final clickedCourseSnapshot = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(user.uid)
+        .collection('clicked_courses')
+        .doc(courseId)
+        .get();
+
+    return clickedCourseSnapshot.exists;
   }
 }
