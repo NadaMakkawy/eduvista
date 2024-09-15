@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import '../models/course.dart';
 import '../utils/color_utilis.dart';
 
 import '../pages/pending_cart_page.dart';
@@ -109,6 +108,8 @@ class _HomePageState extends State<HomePage> {
                 //     clickedCourses: _clickedCourses,
                 //   ),
                 // ],
+
+                // TODO: isclicked from the course card like ispurchased
                 LabelWidget(
                   name: 'Interested Courses',
                   onSeeAllClicked: () {},

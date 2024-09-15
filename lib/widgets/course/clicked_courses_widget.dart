@@ -3,8 +3,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../../models/course.dart';
 
-import '../../utils/image_utility.dart';
-
 import 'course_cards_List_widget.dart';
 
 class ClickedCoursesWidget extends StatefulWidget {
