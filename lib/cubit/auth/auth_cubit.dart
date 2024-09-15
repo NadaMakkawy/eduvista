@@ -103,7 +103,7 @@ class AuthCubit extends Cubit<AuthState> {
             content: Text('Account created successfully'),
           ),
         );
-        Navigator.pushReplacementNamed(context, HomePage.id);
+        Navigator.pushReplacementNamed(context, MainPage.id);
       }
     } on FirebaseAuthException catch (e) {
       if (!context.mounted) return;
