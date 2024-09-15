@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../models/course.dart';
+import './course_card_widget.dart';
 import '../../models/cart_item.dart';
 import '../../cubit/cart/cart_cubit.dart';
-import 'course_card_widget.dart';
 
 class CourseCardsListWidget extends StatefulWidget {
   const CourseCardsListWidget({

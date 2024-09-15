@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:eduvista/utils/image_utility.dart';
 
 import '../../pages/login_page.dart';
 import '../../pages/signup_page.dart';
 import '../../pages/reset_password_page.dart';
 
+import '../../utils/image_utility.dart';
 import '../../utils/color_utilis.dart';
 
 import 'custom_text_button.dart';

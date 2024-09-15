@@ -1,10 +1,10 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:eduvista/pages/main_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../../pages/home_page.dart';
+import '../../pages/main_page.dart';
 import '../../pages/login_page.dart';
 import '../../pages/confirm_password_page.dart';
 

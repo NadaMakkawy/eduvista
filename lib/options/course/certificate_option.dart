@@ -1,10 +1,10 @@
 import 'dart:math';
-import 'package:eduvista/utils/image_utility.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import '../../utils/image_utility.dart';
 import '../../utils/color_utilis.dart';
 
 import '../../models/course.dart';
@@ -139,14 +139,13 @@ class _CertificateOptionState extends State<CertificateOption> {
                     ),
                     SizedBox(height: 20),
                     Text(
-                      'Virginia M. Patterson',
+                      ' ${selectedCourse!.instructor?.name ?? 'No Instructor'}',
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w500,
                         color: ColorUtility.deepBlue,
                       ),
                     ),
-                    SizedBox(height: 10),
                     Text(
                       'Issued on ${selectedCourse?.created_date != null ? DateFormat('MMMM d, y').format(selectedCourse!.created_date!) : 'No Date'}',
                       style: TextStyle(
@@ -158,13 +157,13 @@ class _CertificateOptionState extends State<CertificateOption> {
                     Container(
                       height: 2,
                       width: 100,
-                      color: Colors.grey,
+                      color: ColorUtility.grayLight,
                     ),
                     SizedBox(height: 10),
                     Container(
                       height: 2,
                       width: 100,
-                      color: Colors.teal,
+                      color: ColorUtility.main,
                     ),
                   ],
                 ),

@@ -1,12 +1,12 @@
-import 'package:eduvista/widgets/course/rating_display_widget.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../../models/course.dart';
 
-import 'course_cards_List_widget.dart';
+import '../../widgets/course/rating_display_widget.dart';
+import '../../widgets/course/course_cards_List_widget.dart';
 
 import '../../utils/color_utilis.dart';
 
@@ -35,11 +35,10 @@ class CourseCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () async {
-        Navigator.pushNamed(context, CourseDetailsPage.id,
-            arguments: widget.courses[index]);
+      onTap: () {
+        Navigator.pushNamed(context, CourseDetailsPage.id, arguments: course);
 
-        await clickedCourses(context, widget.courses[index]);
+        clickedCourses(context, course);
       },
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -68,7 +67,7 @@ class CourseCard extends StatelessWidget {
                             TextStyle(fontSize: 14, color: ColorUtility.gray),
                       ),
                       SizedBox(width: 5),
-                      RatingDisplay(rating: widget.courses[index].rating!),
+                      RatingDisplay(rating: courses[index].rating!),
                     ],
                   ),
                   SizedBox(height: 4),
@@ -162,6 +161,7 @@ class CourseCard extends StatelessWidget {
         'title': course.title,
         'price': course.price,
         'image': course.image,
+        'rating': course.rating,
         'instructor': course.instructor?.name,
       },
     );

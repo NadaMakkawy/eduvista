@@ -1,30 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../bloc/course/course_bloc.dart';
 import '../../models/course.dart';
 
 import 'course_cards_List_widget.dart';
 
-class ClickedCoursesWidget extends StatefulWidget {
-  ClickedCoursesWidget({super.key});
+class ClickedCoursesWidget extends StatelessWidget {
+  final List<String> clickedCourseIds;
 
-  @override
-  State<ClickedCoursesWidget> createState() => _ClickedCoursesWidgetState();
-}
-
-class _ClickedCoursesWidgetState extends State<ClickedCoursesWidget> {
-  late Future<QuerySnapshot<Map<String, dynamic>>> futureCall;
-  final int index = 0;
-
-  @override
-  void initState() {
-    futureCall = FirebaseFirestore.instance.collection('clicked_courses').get();
-    super.initState();
-  }
+  const ClickedCoursesWidget({Key? key, required this.clickedCourseIds})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
+    var futureCall = context.read<CourseBloc>().fetchCourses(clickedCourseIds);
+
+    return FutureBuilder<List<Course>>(
       future: futureCall,
       builder: (ctx, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
@@ -39,17 +31,12 @@ class _ClickedCoursesWidgetState extends State<ClickedCoursesWidget> {
           );
         }
 
-        if (!snapshot.hasData || (snapshot.data?.docs.isEmpty ?? false)) {
+        if (!snapshot.hasData || snapshot.data!.isEmpty) {
           return Center(child: Text('No Courses available'));
         }
 
-        var courses = List<Course>.from(snapshot.data?.docs
-                .map((e) => Course.fromJson({'id': e.id, ...e.data()}))
-                .toList() ??
-            []);
-
         return CourseCardsListWidget(
-          courses: courses,
+          courses: snapshot.data!,
           useFixedCrossAxisCount: true,
         );
       },

@@ -18,12 +18,9 @@ class PayCubit extends Cubit<PayState> {
   Future<void> payment(BuildContext context, double totalPrice, String currency,
       List<CartItem> cartItems) async {
     PaymobPayment.instance.initialize(
-      apiKey: dotenv.env[
-          'apiKey']!, // from dashboard Select Settings -> Account Info -> API Key
-      integrationID: int.parse(dotenv.env[
-          'integrationID']!), // from dashboard Select Developers -> Payment Integrations -> Online Card ID
-      iFrameID: int.parse(
-          dotenv.env['iFrameID']!), // from paymob Select Developers -> iframes
+      apiKey: dotenv.env['apiKey']!,
+      integrationID: int.parse(dotenv.env['integrationID']!),
+      iFrameID: int.parse(dotenv.env['iFrameID']!),
     );
 
     final PaymobResponse? response = await PaymobPayment.instance.pay(

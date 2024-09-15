@@ -41,6 +41,22 @@ class CourseBloc extends Bloc<CourseEvent, CourseState> {
     }
   }
 
+  Future<List<Course>> fetchCourses(List<String> courseIds) async {
+    final courses = <Course>[];
+
+    for (var courseId in courseIds) {
+      final doc = await FirebaseFirestore.instance
+          .collection('courses')
+          .doc(courseId)
+          .get();
+
+      if (doc.exists) {
+        courses.add(Course.fromJson({'id': doc.id, ...doc.data()!}));
+      }
+    }
+    return courses;
+  }
+
   FutureOr<void> _onGetCourse(
       CourseFetchEvent event, Emitter<CourseState> emit) async {
     if (course != null) {

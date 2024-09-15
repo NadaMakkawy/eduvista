@@ -4,14 +4,15 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../utils/color_utilis.dart';
 
-import '../pages/pending_cart_page.dart';
 import '../pages/top_courses_page.dart';
+import '../pages/pending_cart_page.dart';
 import '../pages/all_categories_page.dart';
+import '../pages/clicked_courses_page.dart';
 
-import '../widgets/course/clicked_courses_widget.dart';
 import '../widgets/home/label_widget.dart';
 import '../widgets/course/courses_widget.dart';
 import '../widgets/home/categories_widget.dart';
+import '../widgets/course/clicked_courses_widget.dart';
 
 class HomePage extends StatefulWidget {
   static const String id = 'Home';
@@ -24,13 +25,13 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   String welcomeMessage = 'Loading...';
-  // final List<Course> _clickedCourses = [];
+  List<String> _clickedCourses = [];
   User? user = FirebaseAuth.instance.currentUser;
 
   @override
   void initState() {
     _checkUserStatus();
-
+    _fetchClickedCourses();
     super.initState();
   }
 
@@ -99,23 +100,16 @@ class _HomePageState extends State<HomePage> {
                 const SizedBox(
                   height: 20,
                 ),
-                // if (_clickedCourses.isNotEmpty) ...[
-                //   LabelWidget(
-                //     name: 'Interested Courses',
-                //     onSeeAllClicked: () {},
-                //   ),
-                //   ClickedCoursesWidget(
-                //     clickedCourses: _clickedCourses,
-                //   ),
-                // ],
-
-                // TODO: isclicked from the course card like ispurchased
-                LabelWidget(
-                  name: 'Interested Courses',
-                  onSeeAllClicked: () {},
-                ),
-                ClickedCoursesWidget(),
-
+                if (_clickedCourses.isNotEmpty) ...[
+                  LabelWidget(
+                    name: 'Because you Viewed',
+                    onSeeAllClicked: () {
+                      Navigator.pushNamed(context, ClickedCoursesPage.id,
+                          arguments: _clickedCourses);
+                    },
+                  ),
+                  ClickedCoursesWidget(clickedCourseIds: _clickedCourses),
+                ],
                 LabelWidget(
                   name: 'Students also search for',
                   onSeeAllClicked: () {
@@ -186,6 +180,22 @@ class _HomePageState extends State<HomePage> {
         welcomeMessage = isNew ? 'Welcome' : 'Welcome back';
       });
     }
+  }
+
+  Future<void> _fetchClickedCourses() async {
+    if (user == null) return;
+
+    final firestore = FirebaseFirestore.instance;
+    final clickedCoursesSnapshot = await firestore
+        .collection('users')
+        .doc(user!.uid)
+        .collection('clicked_courses')
+        .get();
+
+    setState(() {
+      _clickedCourses =
+          clickedCoursesSnapshot.docs.map((doc) => doc.id).toList();
+    });
   }
 
   Future<bool> isClicked(String courseId) async {

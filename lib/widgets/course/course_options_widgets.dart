@@ -1,17 +1,21 @@
-import 'package:eduvista/options/course/certificate_option.dart';
-import 'package:eduvista/options/course/more_option.dart';
-import 'package:eduvista/utils/color_utilis.dart';
+import 'dart:convert';
+
+import 'package:eduvista/options/course/download_option.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../bloc/course/course_bloc.dart';
 
+import '../../options/course/more_option.dart';
+import '../../options/course/lectures_option.dart';
+import '../../options/course/certificate_option.dart';
+
 import '../../utils/app_enums.dart';
+import '../../utils/color_utilis.dart';
 
 import '../../models/course.dart';
 import '../../models/lecture.dart';
-
-import '../../options/course/lectures_option.dart';
 
 class CourseOptionsWidgets extends StatefulWidget {
   final CourseOptions courseOption;
@@ -75,10 +79,12 @@ class _CourseOptionsWidgetsState extends State<CourseOptionsWidgets> {
         }
 
       case CourseOptions.Download:
-        return const SizedBox.shrink();
+        return DownloadOption(
+          onLectureChosen: widget.onLectureChosen,
+          selectedLecture: selectedLecture,
+        );
 
       case CourseOptions.Certificate:
-        // showCertificate(context);
         return widget.course.has_certificate == true
             ? Center(
                 child: ElevatedButton(

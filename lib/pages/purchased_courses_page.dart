@@ -1,9 +1,10 @@
-import 'package:eduvista/pages/pending_cart_page.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../models/course.dart';
+
+import '../pages/pending_cart_page.dart';
 
 import '../utils/color_utilis.dart';
 import '../utils/image_utility.dart';
@@ -63,10 +64,6 @@ class PurchasedCoursesPage extends StatelessWidget {
             return Center(child: Image.asset(IntroImageUtils.error));
           }
 
-          // var courses = List<Course>.from(snapshot.data?.docs
-          //         .map((e) => Course.fromJson({'id': e.id, ...e.data()}))
-          //         .toList() ??
-          //     []);
           var courses = snapshot.data?.docs.map((doc) {
                 var courseData = doc.data();
                 return Course.fromJson({'id': doc.id, ...courseData});

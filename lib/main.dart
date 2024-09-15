@@ -16,16 +16,17 @@ import '../pages/cart_page.dart';
 import '../pages/login_page.dart';
 import '../pages/signup_page.dart';
 import '../pages/splash_page.dart';
+import '../pages/profile_page.dart';
 import '../pages/onboarding_page.dart';
 import '../pages/top_courses_page.dart';
+import '../pages/pending_cart_page.dart';
 import '../pages/all_categories_page.dart';
 import '../pages/reset_password_page.dart';
 import '../pages/course_details_page.dart';
+import '../pages/clicked_courses_page.dart';
 import '../pages/category_courses_page.dart';
 import '../pages/confirm_password_page.dart';
 import '../pages/purchased_courses_page.dart';
-import '../pages/pending_cart_page.dart';
-import '../pages/profile_page.dart';
 
 import '../services/pref.service.dart';
 
@@ -133,6 +134,11 @@ class MyApp extends StatelessWidget {
                       ));
             case ProfilePage.id:
               return MaterialPageRoute(builder: (context) => ProfilePage());
+            case ClickedCoursesPage.id:
+              return MaterialPageRoute(
+                  builder: (context) => ClickedCoursesPage(
+                        clickedCourseIds: data,
+                      ));
             case MainPage.id:
               return MaterialPageRoute(builder: (context) => MainPage());
             default:

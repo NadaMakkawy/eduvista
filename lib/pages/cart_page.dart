@@ -1,4 +1,3 @@
-import 'package:eduvista/pages/payment_methods_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:forex_currency_conversion/forex_currency_conversion.dart';
@@ -12,7 +11,8 @@ import '../utils/color_utilis.dart';
 
 import '../widgets/course/course_tile_widget.dart';
 
-import 'course_details_page.dart';
+import '../pages/payment_methods_page.dart';
+import '../pages/course_details_page.dart';
 
 class CartPage extends StatefulWidget {
   static const String id = 'CartPage';

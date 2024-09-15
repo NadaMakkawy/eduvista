@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:eduvista/pages/search_page.dart';
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 
 import '../widgets/account_info/image_uploader_circle.dart';
@@ -7,8 +6,9 @@ import '../widgets/account_info/image_uploader_circle.dart';
 import '../utils/color_utilis.dart';
 
 import '../pages/home_page.dart';
-import '../pages/purchased_courses_page.dart';
+import '../pages/search_page.dart';
 import '../pages/profile_page.dart';
+import '../pages/purchased_courses_page.dart';
 
 class MainPage extends StatefulWidget {
   static const String id = 'MainPage';

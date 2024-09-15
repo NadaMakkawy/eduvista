@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:eduvista/utils/image_utility.dart';
+
+import '../utils/image_utility.dart';
 
 import '../pages/login_page.dart';
-
 import '../pages/home_page.dart';
 import '../pages/onboarding_page.dart';
 

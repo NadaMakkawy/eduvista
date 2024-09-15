@@ -1,5 +1,6 @@
-import 'package:eduvista/utils/color_utilis.dart';
 import 'package:flutter/material.dart';
+
+import '../../utils/color_utilis.dart';
 
 class RatingDisplay extends StatelessWidget {
   final double rating;

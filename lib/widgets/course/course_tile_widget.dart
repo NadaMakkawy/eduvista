@@ -1,8 +1,10 @@
-import 'package:eduvista/models/course.dart';
-import 'package:eduvista/widgets/course/rating_display_widget.dart';
 import 'package:flutter/material.dart';
 
+import '../../models/course.dart';
+
 import '../../utils/color_utilis.dart';
+
+import '../../widgets/course/rating_display_widget.dart';
 
 class CourseTileWidget extends StatelessWidget {
   CourseTileWidget({

@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import 'category_item.dart';
 import 'instructor.dart';
+import 'category_item.dart';
 
 class Course {
   String? id;
@@ -16,7 +16,6 @@ class Course {
   double? rating;
   int? total_hours;
   DateTime? created_date;
-  bool? is_clicked;
 
   Course.fromJson(Map<String, dynamic> data) {
     id = data['id'] as String?;
@@ -28,7 +27,6 @@ class Course {
     currency = data['currency'] as String?;
     rank = data['rank'] as String?;
     has_certificate = data['has_certificate'] as bool?;
-    is_clicked = data['is_clicked'] as bool?;
 
     if (data['instructor'] is Map<String, dynamic>) {
       instructor = Instructor.fromJson(data['instructor']);
@@ -60,7 +58,6 @@ class Course {
     data['currency'] = currency;
     data['rank'] = rank;
     data['has_certificate'] = has_certificate;
-    data['is_clicked'] = is_clicked;
     data['instructor'] = instructor?.toJson();
     data['price'] = price;
     data['rating'] = rating;
