@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+import '../cubit/image/image_cubit.dart';
 import '../cubit/auth/auth_cubit.dart';
 
 import '../pages/pending_cart_page.dart';
+
+import '../utils/color_utilis.dart';
 
 import '../widgets/account_info/image_uploader_circle.dart';
 import '../widgets/account_info/gray_container_list_tile_widget.dart';
@@ -41,7 +44,33 @@ class ProfilePage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            ImageUploaderCircle(radius: 70, onTap: () {}),
+            Stack(
+              clipBehavior: Clip.none,
+              children: [
+                ImageUploaderCircle(
+                  radius: 70,
+                  onTap: () {
+                    context.read<ImageCubit>().pickAndUploadImage();
+                  },
+                ),
+                Positioned(
+                    bottom: 0,
+                    right: -25,
+                    child: RawMaterialButton(
+                      onPressed: () {
+                        context.read<ImageCubit>().pickAndUploadImage();
+                      },
+                      elevation: 2.0,
+                      fillColor: ColorUtility.grayExtraLight,
+                      child: Icon(
+                        Icons.image_outlined,
+                        color: ColorUtility.main,
+                      ),
+                      padding: EdgeInsets.all(15.0),
+                      shape: CircleBorder(),
+                    )),
+              ],
+            ),
             SizedBox(height: 16),
             Text(
               '${user?.displayName?[0].toUpperCase()}${user?.displayName?.substring(1)}',

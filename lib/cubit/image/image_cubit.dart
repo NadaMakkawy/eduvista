@@ -25,12 +25,13 @@ class ImageCubit extends Cubit<ImageState> {
           var imageUrl = userDoc.data()!['profileImage'];
           var imageBytes = await _downloadImageFromUrl(imageUrl);
           if (imageBytes != null) {
-            emit(ImageSuccess(imageBytes: imageBytes));
+            if (!isClosed) emit(ImageSuccess(imageBytes: imageBytes));
           }
         }
       }
     } catch (e) {
-      emit(ImageError('Failed to load profile image: ${e.toString()}'));
+      if (!isClosed)
+        emit(ImageError('Failed to load profile image: ${e.toString()}'));
     }
   }
 
@@ -39,7 +40,8 @@ class ImageCubit extends Cubit<ImageState> {
       var imageData = await NetworkAssetBundle(Uri.parse(url)).load(url);
       return imageData.buffer.asUint8List();
     } catch (e) {
-      emit(ImageError('Failed to download image: ${e.toString()}'));
+      if (!isClosed)
+        emit(ImageError('Failed to download image: ${e.toString()}'));
       return null;
     }
   }
@@ -74,7 +76,7 @@ class ImageCubit extends Cubit<ImageState> {
           }
 
           var imageBytes = imageResult.files.first.bytes;
-          emit(ImageSuccess(imageBytes: imageBytes!));
+          if (!isClosed) emit(ImageSuccess(imageBytes: imageBytes!));
         }
       } else {
         var currentUser = FirebaseAuth.instance.currentUser;
@@ -88,15 +90,15 @@ class ImageCubit extends Cubit<ImageState> {
             var imageUrl = userDoc.data()!['profileImage'];
             var imageBytes = await _downloadImageFromUrl(imageUrl);
             if (imageBytes != null) {
-              emit(ImageSuccess(imageBytes: imageBytes));
+              if (!isClosed) emit(ImageSuccess(imageBytes: imageBytes));
             }
           } else {
-            emit(ImageError('No profile image found'));
+            if (!isClosed) emit(ImageError('No profile image found'));
           }
         }
       }
     } catch (e) {
-      emit(ImageError(e.toString()));
+      if (!isClosed) emit(ImageError(e.toString()));
     }
   }
 }

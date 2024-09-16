@@ -70,9 +70,11 @@ class _CourseOptionsWidgetsState extends State<CourseOptionsWidgets> {
           );
         } else {
           return LecturesOption(
-              lectures: lectures,
-              onLectureChosen: widget.onLectureChosen,
-              selectedLecture: selectedLecture);
+            lectures: lectures,
+            onLectureChosen: widget.onLectureChosen,
+            selectedLecture: selectedLecture,
+            course: widget.course,
+          );
         }
 
       case CourseOptions.Download:
