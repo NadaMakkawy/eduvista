@@ -41,6 +41,7 @@ import '../cubit/pay/pay_cubit.dart';
 import '../cubit/cart/cart_cubit.dart';
 import '../cubit/auth/auth_cubit.dart';
 import '../cubit/image/image_cubit.dart';
+import '../cubit/chat/chat_cubit.dart';
 
 void main() async {
   BindingBase.debugZoneErrorsAreFatal;
@@ -62,6 +63,7 @@ void main() async {
       BlocProvider(create: (ctx) => CartCubit()),
       BlocProvider(create: (ctx) => PayCubit()),
       BlocProvider(create: (ctx) => ImageCubit()),
+      BlocProvider(create: (ctx) => ChatCubit()),
       BlocProvider(create: (ctx) => CourseBloc()),
       BlocProvider(create: (ctx) => LectureBloc()),
     ], child: const MyApp()),
