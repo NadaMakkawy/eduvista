@@ -46,7 +46,6 @@ dependencies:
   forex_currency_conversion: ^0.9.0
   meta: ^1.12.0
   paymob_payment: ^0.0.1+1
-  provider: ^6.1.2
   shared_preferences: ^2.3.2
   video_box:
     git:

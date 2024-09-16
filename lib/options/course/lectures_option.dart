@@ -4,9 +4,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../cubit/cart/cart_cubit.dart';
-import '../../models/course.dart';
+
 import '../../widgets/course/lectures_widget.dart';
 
+import '../../models/course.dart';
 import '../../models/lecture.dart';
 
 import '../../utils/color_utilis.dart';
@@ -39,28 +40,12 @@ class _LecturesOptionState extends State<LecturesOption> {
       children: List.generate(
         widget.lectures!.length,
         (index) {
-          // return InkWell(
-          //   onTap: () async {
-          //     widget.onLectureChosen(widget.lectures![index]);
-          //     widget.selectedLecture = widget.lectures![index];
-
-          //     setState(() {});
-          //   },
           return InkWell(
             onTap: () async {
               final isPurchased = await context
                   .read<CartCubit>()
                   .isCoursePurchased(widget.course.id!);
 
-              // if (!isPurchased) {
-              //   _showPurchaseAlert();
-              //   return;
-              // }
-
-              // widget.onLectureChosen(widget.lectures![index]);
-              // widget.selectedLecture = widget.lectures![index];
-
-              // setState(() {});
               if (index == 0 || isPurchased) {
                 widget.onLectureChosen(widget.lectures![index]);
                 widget.selectedLecture = widget.lectures![index];
