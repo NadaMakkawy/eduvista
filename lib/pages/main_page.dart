@@ -8,6 +8,7 @@ import '../utils/color_utilis.dart';
 import '../pages/home_page.dart';
 import '../pages/search_page.dart';
 import '../pages/profile_page.dart';
+import '../pages/chat_users_page.dart';
 import '../pages/purchased_courses_page.dart';
 
 class MainPage extends StatefulWidget {
@@ -24,6 +25,7 @@ class _MainPageState extends State<MainPage> {
     Icons.home,
     Icons.import_contacts_outlined,
     Icons.search,
+    Icons.chat_bubble_outline_rounded
   ];
   int _selectedIndex = 0;
 
@@ -31,6 +33,7 @@ class _MainPageState extends State<MainPage> {
     HomePage(),
     PurchasedCoursesPage(),
     SearchPage(),
+    ChatUsersPage(),
     ProfilePage(),
   ];
 

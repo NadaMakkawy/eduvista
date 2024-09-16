@@ -9,4 +9,5 @@ class ColorUtility {
   static const mediumlBlack = Color(0xff1D1B20);
   static const gbScaffold = Color(0xffFCFCFC);
   static const deepBlue = Color.fromARGB(255, 9, 59, 84);
+  static const senderChatBubble = Color.fromARGB(255, 176, 192, 188);
 }

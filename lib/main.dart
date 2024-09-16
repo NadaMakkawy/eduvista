@@ -10,6 +10,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../firebase_options.dart';
 
+import '../pages/chat_page.dart';
 import '../pages/main_page.dart';
 import '../pages/home_page.dart';
 import '../pages/cart_page.dart';
@@ -17,6 +18,7 @@ import '../pages/login_page.dart';
 import '../pages/signup_page.dart';
 import '../pages/splash_page.dart';
 import '../pages/profile_page.dart';
+import '../pages/chat_users_page.dart';
 import '../pages/onboarding_page.dart';
 import '../pages/top_courses_page.dart';
 import '../pages/pending_cart_page.dart';
@@ -134,6 +136,15 @@ class MyApp extends StatelessWidget {
                       ));
             case ProfilePage.id:
               return MaterialPageRoute(builder: (context) => ProfilePage());
+            case ChatUsersPage.id:
+              return MaterialPageRoute(builder: (context) => ChatUsersPage());
+            case ChatPage.id:
+              return MaterialPageRoute(
+                  builder: (context) => ChatPage(
+                        receiverUserName: data,
+                        receiverUserID: data,
+                        image: data,
+                      ));
             case ClickedCoursesPage.id:
               return MaterialPageRoute(
                   builder: (context) => ClickedCoursesPage(

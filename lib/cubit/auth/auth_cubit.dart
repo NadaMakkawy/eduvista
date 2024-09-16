@@ -13,6 +13,8 @@ part 'auth_state.dart';
 
 class AuthCubit extends Cubit<AuthState> {
   final CartCubit cartCubit;
+  final FirebaseFirestore _fireStore = FirebaseFirestore.instance;
+
   AuthCubit(this.cartCubit) : super(AuthInitial());
 
   Future<void> login({
@@ -39,6 +41,15 @@ class AuthCubit extends Cubit<AuthState> {
         );
 
         Navigator.pushReplacementNamed(context, MainPage.id);
+
+        _fireStore.collection('users').doc(credentials.user!.uid).set(
+          {
+            'email': emailController.text,
+            'uid': credentials.user!.uid,
+            'isNew': false,
+          },
+          SetOptions(merge: true),
+        );
       }
     } on FirebaseAuthException catch (e) {
       if (!context.mounted) return;
@@ -104,8 +115,14 @@ class AuthCubit extends Cubit<AuthState> {
             .set({
           'displayName': nameController.text,
           'email': emailController.text,
+          'uid': credentials.user!.uid,
           'isNew': true,
         });
+
+        // _fireStore.collection('users').doc(credentials.user!.uid).set({
+        //   'uid': credentials.user!.uid,
+        //   'email': emailController.text,
+        // });
 
         if (!context.mounted) return;
 
@@ -239,6 +256,7 @@ class AuthCubit extends Cubit<AuthState> {
       await userDoc.set({
         'displayName': user.displayName ?? 'No Name',
         'email': user.email ?? 'No Email',
+        'uid': user.uid,
         'isNew': true,
       });
     } else {
